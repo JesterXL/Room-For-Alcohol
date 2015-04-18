@@ -1,0 +1,41 @@
+{
+  "name": "Fitbit-OAuth-API-Example",
+  "version": "1.0.0",
+  "description": "Testing Fitbit's API using Node / Restify",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/JesterXL/Fitbit-OAuth-API-Example.git"
+  },
+  "author": "Jesse Warden <jesse@jessewarden.com> (https://jessewarden.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/JesterXL/Fitbit-OAuth-API-Example/issues"
+  },
+  "homepage": "https://github.com/JesterXL/Fitbit-OAuth-API-Example",
+  "devDependencies": {
+    "browser-sync": "^2.4.0",
+    "browserify": "^9.0.3",
+    "chai": "^2.2.0",
+    "del": "^1.1.1",
+    "gulp": "^3.8.11",
+    "gulp-concat": "^2.5.2",
+    "gulp-inject": "^1.2.0",
+    "mocha": "^2.2.4",
+    "open": "0.0.5",
+    "restify": "^3.0.1",
+    "serve-favicon": "^2.2.0",
+    "sinon": "^1.14.1",
+    "tsify": "^0.8.1",
+    "typescript": "^1.4.1",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-paths": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0"
+  },
+  "dependencies": {
+    "oauth": "^0.9.12"
+  }
+}
