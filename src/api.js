@@ -34,12 +34,7 @@ api.post('/incoming', function(req, res, next)
    res.send(204);
 });
 
-app.get('/', function(req, res) {
+api.get('/', function(req, res) {
     console.log('default called');
-    res.send(200);
-});
-
-app.get('*', function(req, res) {
-    console.log('uber default called');
     res.send(200);
 });
