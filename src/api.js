@@ -33,3 +33,13 @@ api.post('/incoming', function(req, res, next)
     console.log('header, X-Fitbit-Signature:', req.header('X-Fitbit-Signature'));
    res.send(204);
 });
+
+app.get('/', function(req, res) {
+    console.log('default called');
+    res.send(200);
+});
+
+app.get('*', function(req, res) {
+    console.log('uber default called');
+    res.send(200);
+});
