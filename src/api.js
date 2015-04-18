@@ -3,7 +3,7 @@ console.log('Loading restify server...');
 var restify = require('restify');
 
 var api = restify.createServer({name: 'fitbit-restify'});
-api.listen(3000, function () {
+api.listen(process.env.PORT || 5000, function () {
     console.log('%s listening at %s', api.name, api.url)
 });
 
@@ -12,9 +12,9 @@ api.listen(3000, function () {
 //     credentials: false,
 //     headers: ['X-Requested-With', 'Authorization']
 // }));
-api.pre(restify.fullResponse());
+// api.pre(restify.fullResponse());
 
-api.use(restify.bodyParser());
+// api.use(restify.bodyParser());
 
 api.get('/ping', function (req, res, next) {
     console.log("ping called");
