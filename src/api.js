@@ -21,3 +21,15 @@ api.get('/ping', function (req, res, next) {
     res.send(200, {response: true});
 });
 
+api.get('/callback', function(req, res, next)
+{
+    console.log('callback called');
+    res.send(200);
+});
+
+api.post('/incoming', function(req, res, next)
+{
+    console.log("incoming called");
+    console.log('header, X-Fitbit-Signature:', req.header('X-Fitbit-Signature'));
+   res.send(204);
+});
