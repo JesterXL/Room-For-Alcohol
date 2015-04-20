@@ -1,8 +1,8 @@
 'use strict';
 
-var gruntBuild = function(grunt)
+module.exports = function(grunt)
 {
-    var BUILD_CONFIG = require('./build.config.js');
+    var CONFIG = require('./build.config.js');
 
     require('load-grunt-tasks')(grunt);
 
@@ -24,7 +24,11 @@ var gruntBuild = function(grunt)
                 jshintrc: '.jshintrc'
             },
 
-            src: BUILD_CONFIG.client.sourceFiles
+            src: CONFIG.client.sourceFiles.map(function(item)
+                                                {
+                                                    return CONFIG.client.baseDirectory + '/' + item;
+                                                }
+                                              )
         },
 
         // Checks your JavaScript code style matches the rules in .jscsrc
@@ -33,13 +37,21 @@ var gruntBuild = function(grunt)
                 force: true,
                 config: '.jscsrc'
             },
-            src: BUILD_CONFIG.client.sourceFiles
+            src: CONFIG.client.sourceFiles.map(function(item)
+                                                {
+                                                    return CONFIG.client.baseDirectory + '/' + item;
+                                                }
+                                              )
         },
 
         // // Cyclomatic complexity checks for JavaScript files
         complexity: {
             all: {
-                src: BUILD_CONFIG.client.sourceFiles,
+                src: CONFIG.client.sourceFiles.map(function(item)
+                                                {
+                                                    return CONFIG.client.baseDirectory + '/' + item;
+                                                }
+                                              ),
                 options: {
                     breakOnErrors: true,
                     errorsOnly: false,               // show only maintainability errors
@@ -60,7 +72,7 @@ var gruntBuild = function(grunt)
         coverage: {
             server: {
                 options: {
-                    dir: BUILD_CONFIG.client.coverageDirectory,
+                    dir: CONFIG.client.coverageDirectory,
                     coverageThresholds: {
                      'statements': 80,
                      'branches':   80,
@@ -74,7 +86,7 @@ var gruntBuild = function(grunt)
         // Runs unit tests
         karma: {
             test: {
-                configFile: BUILD_CONFIG.karma.configFile,
+                configFile: CONFIG.karma.configFile,
                 singleRun: true
             }
         },
@@ -82,11 +94,11 @@ var gruntBuild = function(grunt)
         // Cleans up the build folders to have a nice, fresh, new build
         clean: {
             dev: {
-                src: [BUILD_CONFIG.client.buildDirectory, BUILD_CONFIG.client.coverageDirectory]
+                src: [CONFIG.client.buildDirectory, CONFIG.client.coverageDirectory]
             },
 
             devCSS: {
-                src: [BUILD_CONFIG.client.buildDirectory + '/**/*.css']
+                src: [CONFIG.client.buildDirectory + '/**/*.css']
             }
         },
 
@@ -107,12 +119,12 @@ var gruntBuild = function(grunt)
 
         // Copies files from development to the build directory
         copy: {
-            // devJS: {
-            //     expand: true,
-            //     cwd: 'src/client',
-            //     src: ['*.js','**/*.js', '!**/*spec*.js', '!test/**'],
-            //     dest: 'build'
-            // },
+            devJS: {
+                expand: true,
+                cwd: CONFIG.client.baseDirectory,
+                src: CONFIG.client.sourceFiles,
+                dest: CONFIG.client.buildDirectory
+            },
 
             // devAssets: {
             //     expand: true,
@@ -133,8 +145,8 @@ var gruntBuild = function(grunt)
                     {
                         expand: false,
                         cwd: '.',
-                        src: BUILD_CONFIG.client.sourceIndexFile,
-                        dest: BUILD_CONFIG.client.buildIndexFile
+                        src: CONFIG.client.sourceIndexFile,
+                        dest: CONFIG.client.buildIndexFile
                     }
                 ]
             }
@@ -143,7 +155,7 @@ var gruntBuild = function(grunt)
         // Compiles LESS files to CSS
         less: {
             dev: {
-                files: BUILD_CONFIG.client.lessFiles
+                files: CONFIG.client.lessFiles
             }
 
             // prod: {
@@ -283,35 +295,27 @@ var gruntBuild = function(grunt)
         //     }
         // },
 
-        // // Injects references to files (scripts, stylesheets) into other files (index.html)
-        // injector: {
-        //     options: {
-        //         template: 'build/index.html',
-        //         addRootSlash: false,
-        //         ignorePath: 'build/'
-        //     },
-        //     prod: {
-        //         dest: 'build/index.html',
-        //         src: [
-        //             'build/*.css',
-        //             'build/*.js'
-        //      //       'build/<%= APP_NAME %>.bowerDependencies.js',
-        //        //     'build/<%= APP_NAME %>.js',
+        // Injects references to files (scripts, stylesheets) into other files (index.html)
+        injector: {
+            options: {
+                template: CONFIG.client.buildIndexFile,
+                addRootSlash: false,
+                ignorePath: CONFIG.client.buildDirectory + '/'
+            },
+            // prod: {
+            //     dest: 'build/index.html',
+            //     src: [
+            //         'build/*.css',
+            //         'build/*.js'
+            //  //       'build/<%= APP_NAME %>.bowerDependencies.js',
+            //    //     'build/<%= APP_NAME %>.js',
 
-        //         ]
-        //     },
-        //     dev: {
-        //         files: {
-        //             'build/index.html': [
-        //                 'build/*.js',
-        //                 'build/**/*.module.js',
-        //                 'build/**/*.js',
-        //                 'build/**/*.css',
-        //                 'build/*.css'
-        //             ]
-        //         }
-        //     }
-        // },
+            //     ]
+            // },
+            dev: {
+                files: CONFIG.client.injectorFiles
+            }
+        }
 
         // nodemon: {
         //     serverStatic: {
@@ -397,7 +401,7 @@ var gruntBuild = function(grunt)
 
 
     };
-
+    
     grunt.initConfig(tasks);
 
     // ************************************************************
@@ -439,8 +443,10 @@ var gruntBuild = function(grunt)
 
     grunt.registerTask('build_dev1', [
         'clean:dev',
+        'less:dev',
         'copy:html',
-        'wiredep'
+        'wiredep',
+        'injector:dev'
     ]);
 
     // build
@@ -502,5 +508,3 @@ var gruntBuild = function(grunt)
         ]);
     }
 };
-
-module.exports = gruntBuild;
