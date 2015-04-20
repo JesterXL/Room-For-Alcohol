@@ -8,7 +8,10 @@ module.exports = {
     baseDirectory: 'src/client',
     sourceFiles:     ['src/client/**/*.js', '!src/client/**/*.spec.js', '!Gruntfile.js', '!gulpfile.js'],
     testFiles:       ['src/client/**/*.spec.js'],
-    buildDirectory:  'build'
+    buildDirectory:  'build',
+    coverageDirectory: 'coverage',
+    sourceIndexFile: 'src/client/index.html',
+    buildIndexFile: 'build/index.html'
   },
 
   karma: {

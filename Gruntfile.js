@@ -60,7 +60,7 @@ var gruntBuild = function(grunt)
         coverage: {
             server: {
                 options: {
-                    dir: 'coverage',
+                    dir: BUILD_CONFIG.client.coverageDirectory,
                     coverageThresholds: {
                      'statements': 80,
                      'branches':   80,
@@ -79,15 +79,18 @@ var gruntBuild = function(grunt)
             }
         },
 
-        // // Cleans up the build folders to have a nice, fresh, new build
-        // clean: {
-        //     dev: {
-        //         src: ['build', 'coverage']
-        //     },
+        // Cleans up the build folders to have a nice, fresh, new build
+        clean: {
+            dev: {
+                src: [BUILD_CONFIG.client.buildDirectory, BUILD_CONFIG.client.coverageDirectory]
+            },
 
-        //     devCSS: {
-        //         src: ['build/**/*.css']
-        //     },
+            devCSS: {
+                src: [BUILD_CONFIG.client.buildDirectory + '/**/*.css']
+            }
+        },
+
+            
 
         //     prod: {
         //         src: ['build', 'coverage']
@@ -102,46 +105,40 @@ var gruntBuild = function(grunt)
         //     }
         // },
 
-        // // Copies files from development to the build directory
-        // copy: {
-        //     devJS: {
-        //         expand: true,
-        //         cwd: 'src/client',
-        //         src: ['*.js','**/*.js', '!**/*spec*.js', '!test/**'],
-        //         dest: 'build'
-        //     },
+        // Copies files from development to the build directory
+        copy: {
+            // devJS: {
+            //     expand: true,
+            //     cwd: 'src/client',
+            //     src: ['*.js','**/*.js', '!**/*spec*.js', '!test/**'],
+            //     dest: 'build'
+            // },
 
-        //     devAssets: {
-        //         expand: true,
-        //         cwd: 'src/client/<%= APP_NAME %>/layout/assets',
-        //         src: ['**/*.{jpg,png,svg,gif,ico}'],
-        //         dest: 'build'
-        //     },
+            // devAssets: {
+            //     expand: true,
+            //     cwd: 'src/client/<%= APP_NAME %>/layout/assets',
+            //     src: ['**/*.{jpg,png,svg,gif,ico}'],
+            //     dest: 'build'
+            // },
 
-        //     devTemplates: {
-        //         expand: true,
-        //         cwd: 'src/client',
-        //         src: ['**/*.html'],
-        //         dest: 'build'
-        //     },
+            // devTemplates: {
+            //     expand: true,
+            //     cwd: 'src/client',
+            //     src: ['**/*.html'],
+            //     dest: 'build'
+            // },
 
-        //     prodHTML: {
-        //         files: [
-        //             {
-        //                 expand: false,
-        //                 cwd: '.',
-        //                 src: 'src/client/index.html',
-        //                 dest: 'build/index.html'
-        //             },
-        //             {
-        //                 expand: true,
-        //                 cwd: '.',
-        //                 flatten: true,
-        //                 src: 'bower_components/bootstrap/fonts/*',
-        //                 dest: 'build/fonts'
-        //         }]
-        //     }
-        // },
+            html: {
+                files: [
+                    {
+                        expand: false,
+                        cwd: '.',
+                        src: BUILD_CONFIG.client.sourceIndexFile,
+                        dest: BUILD_CONFIG.client.buildIndexFile
+                    }
+                ]
+            }
+        },
 
         // // Compiles LESS files to CSS
         // less: {
@@ -259,17 +256,13 @@ var gruntBuild = function(grunt)
         //     }
         // },
 
-        // // Injects Bower packages into your index.html
-        // wiredep: {
-        //     client: {
-        //         src: 'src/client/index.html',
-        //         ignorePath: /\.\./
-        //     },
-        //     build: {
-        //         src: 'build/index.html',
-        //         ignorePath: /\.\./
-        //     }
-        // },
+        // Injects Bower packages into your index.html
+        wiredep: {
+            build: {
+                src: 'build/index.html',
+                ignorePath: /\.\./
+            }
+        },
 
         // // Replaces references to non-optimized scripts or stylesheets into a set of HTML files (or any templates/views)
         // usemin: {
@@ -423,10 +416,6 @@ var gruntBuild = function(grunt)
             'coverage'
     ]);
 
-    grunt.registerTask('test2',
-        'test, no coverage', [
-        'karma']);
-
     grunt.registerTask('default', ['build_dev', 'open', 'watch:dev']);
 
 
@@ -448,6 +437,12 @@ var gruntBuild = function(grunt)
         'clean:prod',
         'copy:prodHTML',
         'wiredep:build'
+    ]);
+
+    grunt.registerTask('build_dev1', [
+        'clean:dev',
+        'copy:html',
+        'wiredep'
     ]);
 
     // build
