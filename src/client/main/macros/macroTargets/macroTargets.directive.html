@@ -1,0 +1,43 @@
+<div>
+    <h2>Calorie Breakdown</h2>
+    <div class="row">
+	    <div style="text-align: center;" class="col-md-6">
+	    	<h3>Current</h3>
+	    	<canvas id="currentChart" width="130" height="130"></canvas>
+	    </div>
+	    <div style="text-align: center;" class="col-md-6">
+	    	<h3>Target</h3>
+	   		<canvas id="targetChart" width="130" height="130"></canvas>
+	   	</div>
+	</div>
+    <table class="table">
+    	<thead>
+    		<tr>
+    			<th></th>
+    			<th></th>
+    			<th>Current</th>
+    			<th>Target</th>
+    		</tr>
+    	</thead>
+    	<tbody>
+	    	<tr>
+	    		<th><div style="background-color: #F7464A; width: 1em; height: 1em;"></div></th>
+	    		<td>Protein</td>
+	    		<td>{{vm.macroTarget.proteinCurrent | percent}}%</td>
+	    		<td>{{vm.macroTarget.protein | percent}}%</td>
+	    	</tr>
+	    	<tr>
+	    		<th><div style="background-color: #46BFBD; width: 1em; height: 1em;"></div></th>
+	    		<td>Carbohydrates</td>
+	    		<td>{{vm.macroTarget.carbsCurrent | percent}}%</td>
+	    		<td>{{vm.macroTarget.carbs | percent}}%</td>
+	    	</tr>
+	    	<tr>
+	    		<th><div style="background-color: #FDB45C; width: 1em; height: 1em;"></div></th>
+	    		<td>Fats</td>
+	    		<td>{{vm.macroTarget.fatCurrent | percent}}%</td>
+	    		<td>{{vm.macroTarget.fat | percent}}%</td>
+	    	</tr>
+    	</tbody>
+	</table>
+</div>

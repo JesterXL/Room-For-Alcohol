@@ -1,0 +1,56 @@
+<h2>Food List</h2>
+<table class="table table-striped">
+	<thead>
+		<tr>
+            <th>Food</th>
+            <th>Amount</th>
+			<th>Calories</th>
+			<th>Protein</th>
+			<th>Carbs</th>
+			<th>Fat</th>
+			<td></td>
+		</tr>
+	</thead>
+	<tbody>
+    	<tr ng-repeat="food in vm.macroTarget.foods">
+    		<th title="{{food.name}}">{{food.shortName}}</th>
+            <td ng-init="editAmount = false"
+                ng-mouseenter="editAmount = true"
+                ng-mouseleave="editAmount = false">
+                <div class="input-group" style="width: 4em;" ng-show="editAmount">
+                  <input type="number" class="form-control" placeholder="1" ng-model="food.amount" ng-change="vm.onChangeFoodAmount(food)"
+                   min="1" max="9001"></input>
+                </div>
+                <div ng-hide="editAmount" style="text-align: center;">{{food.amount}}</div>
+            </td>
+    		<td style="text-align: center;">{{food.calories | number:0}}</td>
+    		<td style="text-align: center;">{{food.protein | number:0}}</td>
+    		<td style="text-align: center;">{{food.carbs | number:0}}</td>
+    		<td style="text-align: center;">{{food.fat | number:0}}</td>
+    		<td>
+            <!-- <span class="glyphicon glyphicon-remove-sign"
+                        ng-click="vm.onDeleteFood(food)">
+    			</span> -->
+                <button type="button" class="close" aria-label="Close" ng-click="vm.onDeleteFood(food)"><span aria-hidden="true">&times;</span></button>
+    		</td>
+    	</tr>
+	</tbody>
+</table>
+
+<form class="form-inline">
+  <div class="form-group">
+    <label for="foodSearchInput">Search Food:</label>
+    <input type="text" class="form-control" id="foodSearchInput" placeholder="search food"
+        ng-model="vm.foodSearch"
+        ng-change="vm.onFoodSearch()"
+        ng-focus="vm.onFoodSearch()">
+    <button type="button" class="btn btn-primary">Add</button>
+  </div>
+</form>
+
+<div class="list-group" 
+        ng-show="vm.hasSearchResults">
+            <a class="list-group-item" 
+                ng-repeat="food in vm.foodSearchMatches"
+                ng-click="vm.onChooseFood(food)">{{food.name}}</a>
+</div>
