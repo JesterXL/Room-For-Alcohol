@@ -140,24 +140,22 @@ var gruntBuild = function(grunt)
             }
         },
 
-        // // Compiles LESS files to CSS
-        // less: {
-        //     dev: {
-        //         files: {
-        //           '<%= COMPILED_LESS_FILE %>': '<%= MAIN_LESS_FILE %>'
-        //         }
-        //     },
+        // Compiles LESS files to CSS
+        less: {
+            dev: {
+                files: BUILD_CONFIG.client.lessFiles
+            }
 
-        //     prod: {
-        //         options: {
-        //             compress: true,
-        //             cleancss: true
-        //         },
-        //         files: {
-        //             '<%= COMPILED_LESS_FILE %>': MAIN_LESS_FILE
-        //         }
-        //     }
-        // },
+            // prod: {
+            //     options: {
+            //         compress: true,
+            //         cleancss: true
+            //     },
+            //     files: {
+            //         '<%= COMPILED_LESS_FILE %>': MAIN_LESS_FILE
+            //     }
+            // }
+        },
 
         // // Parses CSS and adds vendor-prefixed CSS properties
         // autoprefixer: {

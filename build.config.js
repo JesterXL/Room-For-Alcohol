@@ -8,6 +8,7 @@ module.exports = {
     baseDirectory: 'src/client',
     sourceFiles:     ['src/client/**/*.js', '!src/client/**/*.spec.js', '!Gruntfile.js', '!gulpfile.js'],
     testFiles:       ['src/client/**/*.spec.js'],
+    lessFiles:  {'build/roomForAlcohol.css': 'src/client/roomForAlcohol.less'},
     buildDirectory:  'build',
     coverageDirectory: 'coverage',
     sourceIndexFile: 'src/client/index.html',
