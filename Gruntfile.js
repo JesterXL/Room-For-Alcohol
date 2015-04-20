@@ -401,7 +401,7 @@ module.exports = function(grunt)
 
 
     };
-    
+
     grunt.initConfig(tasks);
 
     // ************************************************************
@@ -444,6 +444,7 @@ module.exports = function(grunt)
     grunt.registerTask('build_dev1', [
         'clean:dev',
         'less:dev',
+        'copy:devJS',
         'copy:html',
         'wiredep',
         'injector:dev'
