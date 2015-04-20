@@ -1,6 +1,7 @@
 var fs = require('fs');
 var path = require('path');
 var wiredep = require('wiredep');
+var BUILD_CONFIG = require('./build.config.js');
 
 var files = [];
 
@@ -23,12 +24,7 @@ module.exports = function(config) {
             'chai',
             'sinon'
         ],
-        files: files.concat([
-            'src/client/**/*.module.js',
-            'src/client/**/*.js',
-            'src/client/**/*.html',
-            'src/client/**/*.spec.js'
-        ]),
+        files: files.concat(BUILD_CONFIG.karma.files),
         client: {
             mocha: {
                 ui: 'bdd'
@@ -37,7 +33,7 @@ module.exports = function(config) {
         exclude: [],
         port: 8180,
         browsers: ['PhantomJS'],
-        singleRun: false,
+        singleRun: true,
         colors: true,
         logLevel: config.LOG_INFO,
         reporters: ['progress', 'coverage'],
@@ -56,7 +52,7 @@ module.exports = function(config) {
         ],
         preprocessors: {
             'src/**/*.html': 'ng-html2js',
-            'src/!(test-helpers)/**/!(*.spec).js': ['coverage']
+            'src/!(coverage)/**/!(*.spec).js': ['coverage']
         },
         // configure the reporter
         coverageReporter: {
@@ -71,7 +67,7 @@ module.exports = function(config) {
         },
         ngHtml2JsPreprocessor: {
             moduleName: 'room-for-alcohol',
-            stripPrefix: 'src/client/'
+            stripPrefix: BUILD_CONFIG.client.baseDirectory
         }
     });
 };

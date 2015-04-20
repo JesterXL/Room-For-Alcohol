@@ -52,28 +52,32 @@ var gruntBuild = function(grunt)
             }
         },
 
-        // // Unit test code coverage for mocha server tests
-        // coverage: {
-        //     server: {
-        //         options: {
-        //             dir: 'coverage',
-        //             coverageThresholds: {
-        //              'statements': 80,
-        //              'branches':   80,
-        //              'lines':      80,
-        //              'functions':  80
-        //             }
-        //         }
-        //     }
-        // },
+        // Unit test code coverage for mocha server tests
+        // [jwarden 4.20.2015] NOTE: 80% coverage is difucult to get, ecspecially
+        // on branches. Consider lowering these numbers signicantly to 10% in the beginning
+        // of a large refactoring effort and slowly ratchet up. Branches are ecspecially hard
+        // if you're dealign with an older code base wasn't written to be testable.
+        coverage: {
+            server: {
+                options: {
+                    dir: 'coverage',
+                    coverageThresholds: {
+                     'statements': 80,
+                     'branches':   80,
+                     'lines':      80,
+                     'functions':  80
+                    }
+                }
+            }
+        },
 
-        // // Runs unit tests
-        // karma: {
-        //     test: {
-        //         configFile: 'karma.conf.js',
-        //         singleRun: true
-        //     }
-        // },
+        // Runs unit tests
+        karma: {
+            test: {
+                configFile: BUILD_CONFIG.karma.configFile,
+                singleRun: true
+            }
+        },
 
         // // Cleans up the build folders to have a nice, fresh, new build
         // clean: {
