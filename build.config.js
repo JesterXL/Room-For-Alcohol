@@ -18,7 +18,11 @@ module.exports = {
                                           'src/client/**/*.module.js',
                                           'src/client/**/*.js',
                                           'src/client/**/*.css',
-                                          'src/client/*.css']
+                                          'src/client/*.css',
+                                          '!src/client/*.spec.js', 
+                                          '!src/client/**/*.spec.js', 
+                                          '!Gruntfile.js', 
+                                          '!gulpfile.js']
                     }
   },
 
@@ -28,18 +32,13 @@ module.exports = {
             'src/client/**/*.js',
             'src/client/**/*.html',
             'src/client/**/*.spec.js']
+  },
+
+  staticServer: {
+    file: './src/static/app.js',
+    nodemonWatchFiles: ['src/api/**/*.js', 'src/static/**/*.js'],
+    port: 8553
   }
-
-
-  // staticServerConfig = {
-  //   srcFiles:    ['src/static/**/*.js'],
-  //   destDir:     'build/static',
-  //   srcBaseDirs: ['src/static'],
-  //   main:        'src/static/server.js',
-  //   port: 8628,
-  //   watchFiles:    ['src/static/**/*'],
-  //   reloadWatchfile: '.reloadStatic'
-  // }
 
   
 };

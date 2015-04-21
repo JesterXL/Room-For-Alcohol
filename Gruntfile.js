@@ -133,12 +133,12 @@ module.exports = function(grunt)
             //     dest: 'build'
             // },
 
-            // devTemplates: {
-            //     expand: true,
-            //     cwd: 'src/client',
-            //     src: ['**/*.html'],
-            //     dest: 'build'
-            // },
+            devTemplates: {
+                expand: true,
+                cwd: CONFIG.client.baseDirectory,
+                src: ['**/*.html'],
+                dest: CONFIG.client.buildDirectory
+            },
 
             html: {
                 files: [
@@ -300,7 +300,7 @@ module.exports = function(grunt)
             options: {
                 template: CONFIG.client.buildIndexFile,
                 addRootSlash: false,
-                ignorePath: CONFIG.client.buildDirectory + '/'
+                ignorePath: 'src/client/'
             },
             // prod: {
             //     dest: 'build/index.html',
@@ -315,42 +315,42 @@ module.exports = function(grunt)
             dev: {
                 files: CONFIG.client.injectorFiles
             }
-        }
+        },
 
-        // nodemon: {
-        //     serverStatic: {
-        //         script: './src/static/app.js',
-        //         options: {
-        //             watch: ['src/api/**/*.js', 'src/static/**/*.js'],
-        //             delay: 1000,
-        //             nodeArgs: ['--debug'],
-        //             env: {
-        //                 PORT: staticServerConfig.port
-        //             }
-        //         },
-        //         callback: function (nodemon) {
-        //             nodemon.on('log', function (event) {
-        //               console.log(event.colour);
-        //             });
+        nodemon: {
+            serverStatic: {
+                script: CONFIG.staticServer.file,
+                options: {
+                    watch: CONFIG.staticServer.nodemonWatchFiles,
+                    delay: 1000,
+                    nodeArgs: ['--debug'],
+                    env: {
+                        PORT: CONFIG.staticServer.port
+                    }
+                },
+                callback: function (nodemon) {
+                    nodemon.on('log', function (event) {
+                      console.log(event.colour);
+                    });
 
-        //             // opens browser on initial server start
-        //             nodemon.on('config:update', function () {
-        //               // Delay before server listens on port
-        //               setTimeout(function() {
-        //                 require('open')('http://localhost:' + staticServerConfig.port);
-        //               }, 1000);
-        //             });
+                    // opens browser on initial server start
+                    nodemon.on('config:update', function () {
+                      // Delay before server listens on port
+                      setTimeout(function() {
+                        require('open')('http://localhost:' + CONFIG.staticServer.port);
+                      }, 1000);
+                    });
 
-        //             // refreshes browser when server reboots
-        //             nodemon.on('restart', function () {
-        //               // Delay before server listens on port
-        //               setTimeout(function() {
-        //                 require('fs').writeFileSync('.rebooted', 'rebooted');
-        //               }, 1000);
-        //             });
-        //           }
-        //     }
-        // },
+                    // refreshes browser when server reboots
+                    nodemon.on('restart', function () {
+                      // Delay before server listens on port
+                      setTimeout(function() {
+                        require('fs').writeFileSync('.rebooted', 'rebooted');
+                      }, 1000);
+                    });
+                  }
+            }
+        },
 
         // concurrent: {
         //     serverApp: {
@@ -365,7 +365,7 @@ module.exports = function(grunt)
         //     }
         // },
 
-        // // Runs predefined tasks whenever watched file patterns are added, changed or deleted.
+        // Runs predefined tasks whenever watched file patterns are added, changed or deleted.
         // watch: {
         //     serverStatic: {
         //         files: ['.rebooted']
@@ -418,12 +418,12 @@ module.exports = function(grunt)
             'coverage'
     ]);
 
-    grunt.registerTask('default', ['build_dev', 'open', 'watch:dev']);
+    grunt.registerTask('default', ['build_dev1', 'open']);
 
 
     grunt.registerTask('open', function()
     {
-        require('open')('http://localhost:' + staticServerConfig.port);
+        require('open')('http://localhost:' + CONFIG.staticServer.port);
     });
 
 
@@ -445,6 +445,7 @@ module.exports = function(grunt)
         'clean:dev',
         'less:dev',
         'copy:devJS',
+        'copy:devTemplates',
         'copy:html',
         'wiredep',
         'injector:dev'

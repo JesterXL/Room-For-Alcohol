@@ -1,14 +1,14 @@
 console.log('Loading restify server...');
 
 var restify = require('restify');
-var redisServer   = require("redis");
-var redis  = redis.createClient();
-var OAuth = require('oauth');
+// var redisServer   = require("redis");
+// var redis  = redisServer.createClient();
+// var OAuth = require('oauth');
 
-client.on("error", function (err)
-{
-    console.error("Resis Error:", err);
-});
+// redis.on("error", function (err)
+// {
+//     console.error("Resis Error:", err);
+// });
 
 /*
 client.set("string key", "string val", redis.print);
