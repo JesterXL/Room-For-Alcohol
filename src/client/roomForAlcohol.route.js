@@ -23,7 +23,7 @@
                 template: '<rfa-workout></rfa-workout>'
             })
             
-            .state('ships.type', {
+            .state('shipsType', {
                 url: '/ships/:param',
                 templateProvider: function ($timeout, $stateParams) {
                     return function()
@@ -32,15 +32,15 @@
                     };
                 }
             })
-            .state('ships.decks', {
+            .state('shipsDecks', {
                 url: '/ships/deckplans',
                 template: '<h1>Ship Deck Plans</h1>'
             })
 
-            // .state('ships', {
-            //     url: '/ships',
-            //     template: '<h1>Ships</h1>'
-            // })
+            .state('ships', {
+                url: '/ships',
+                template: '<h1>Ships</h1>'
+            })
             ;
     }
 
@@ -70,6 +70,8 @@
             {
                 console.error('stateChangeError, fromState: ' + fromState.name + ', toState: ' + toState.name + ', error:', error);
             });
+
+        console.log('state now:', $state.current);
     }
 
 

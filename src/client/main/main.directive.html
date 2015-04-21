@@ -6,6 +6,8 @@
 	<li role="presentation" 
 		ng-class="{active: vm.workoutEnabled}"
 		data-toggle="{{vm.workoutTab}}"><a ui-sref="workout">Workout</a></li>
-	<li role="presentation"><a ng-click="vm.onGoToShips()">Ships</a></li>
+	<li role="presentation"><a ui-sref='ships'>Ships</a></li>
+	<li role="presentation"><a ng-click='vm.onGotoShipParam()'>Ships Param</a></li>
+	<li role="presentation"><a ui-sref='shipsDecks'>Ship Deckplans</a></li>
 </ul>
 <div ng-transclude></div>

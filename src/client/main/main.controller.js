@@ -4,7 +4,7 @@
 		.controller("rfaMainController", rfaMainController);
 
 	/* @ngInject */
-    function rfaMainController($state, $rootScope)
+    function rfaMainController($state, $rootScope, $location)
     {
         var vm = this;
         vm.macrosEnabled = false;
@@ -28,6 +28,11 @@
         		vm.workoutEnabled = true;
         		vm.workoutTab = 'tab';
         	}
+        };
+
+        vm.onGotoShipParam = function()
+        {
+            $location.url('/ships/10');
         };
 
         $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams)
