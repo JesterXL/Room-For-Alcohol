@@ -1,4 +1,4 @@
-'use strict';
+
 
 module.exports = function(grunt)
 {
@@ -24,11 +24,7 @@ module.exports = function(grunt)
                 jshintrc: '.jshintrc'
             },
 
-            src: CONFIG.client.sourceFiles.map(function(item)
-                                                {
-                                                    return CONFIG.client.baseDirectory + '/' + item;
-                                                }
-                                              )
+            src: CONFIG.client.sourceFiles
         },
 
         // Checks your JavaScript code style matches the rules in .jscsrc
@@ -37,11 +33,7 @@ module.exports = function(grunt)
                 force: true,
                 config: '.jscsrc'
             },
-            src: CONFIG.client.sourceFiles.map(function(item)
-                                                {
-                                                    return CONFIG.client.baseDirectory + '/' + item;
-                                                }
-                                              )
+            src: CONFIG.client.sourceFiles
         },
 
         // // Cyclomatic complexity checks for JavaScript files
@@ -350,7 +342,7 @@ module.exports = function(grunt)
                     });
                   }
             }
-        },
+        }
 
         // concurrent: {
         //     serverApp: {
@@ -404,6 +396,10 @@ module.exports = function(grunt)
 
     grunt.initConfig(tasks);
 
+    grunt.registerTask('hello', function()
+    {
+        console.log('print');
+    });
     // ************************************************************
     // ** development tasks **/
     grunt.registerTask('analyze',

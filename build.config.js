@@ -1,13 +1,13 @@
 
 var packageJSON = require('./package.json');
 
-module.exports = {
+var config = {
   
 
   client: {
     baseDirectory: 'src/client',
     sourceFiles:     ['*.js', '**/*.js', '!*.spec.js', '!**/*.spec.js', '!Gruntfile.js', '!gulpfile.js'],
-    testFiles:       ['src/client/*.spec.js', 'src/client/**/*.spec.js'],
+    testFiles:       ['*.spec.js', '**/*.spec.js'],
     lessFiles:  {'build/roomForAlcohol.css': 'src/client/roomForAlcohol.less'},
     buildDirectory:  'build',
     coverageDirectory: 'coverage',
@@ -26,12 +26,30 @@ module.exports = {
                     }
   },
 
+  prefixPath: function(listOfFiles, prefix)
+  {
+    return listOfFiles.map(function(item)
+    {
+      if(item.charAt(0) != '!')
+      {
+        return config.client.baseDirectory + '/' + item;
+      }
+      else
+      {
+        return item;
+      }
+    });
+  },
+
+  normalizeSourceFiles: function()
+  {
+    config.client.sourceFiles = config.prefixPath(config.client.sourceFiles, config.client.baseDirectory);
+    config.client.testFiles = config.prefixPath(config.client.testFiles, config.client.baseDirectory);
+  },
+
   karma: {
     configFile: 'karma.conf.js',
-    files: ['src/client/**/*.module.js',
-            'src/client/**/*.js',
-            'src/client/**/*.html',
-            'src/client/**/*.spec.js']
+    files: ['src/client/roomForAlcohol.route.spec.js']
   },
 
   staticServer: {
@@ -42,3 +60,7 @@ module.exports = {
 
   
 };
+
+config.normalizeSourceFiles();
+
+module.exports = config;

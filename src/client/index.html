@@ -14,7 +14,7 @@
     <!-- endinjector -->
     <base href="/">
 </head>
-<body ng-app="roomForAlcohol" style="padding-top: 10px;">
+<body app="roomForAlcohol" style="padding-top: 10px;">
 <!--[if lt IE 8]>
 <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 <![endif]-->
@@ -27,6 +27,7 @@
     </rfa-main>
 
 </div>
+
 
 <!--[if lt IE 9]>
 <script src="../../bower_components/es5-shim/es5-shim.js"></script>
@@ -42,6 +43,9 @@
 <!-- inject:js -->
 <!-- endinject -->
 
-<script src="//localhost:35731/livereload.js"></script>
+<script type='text/javascript' id="__bs_script__">
+    document.write("<script async src='http://HOST:3000/browser-sync/browser-sync-client.2.6.4.js'><script>".replace("HOST", location.hostname));
+</script>
+<b>Sup</b>
 </body>
 </html>
