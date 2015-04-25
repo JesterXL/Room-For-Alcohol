@@ -17,6 +17,9 @@ var complexity 	= require('gulp-complexity');
 var karma 		= require('karma').server;
 var stylish 	= require('jshint-stylish');
 var eslint 		= require('gulp-eslint');
+var eslintPathFormatter = require('eslint-path-formatter');
+var mocha 		= require('gulp-mocha');
+var  mochaLcovReporter = require('mocha-lcov-reporter');
 
 var CONFIG 		= require('./build.config');
 
@@ -35,15 +38,28 @@ gulp.task('analyze', function() {
     	this.emit('end');
     })
     .pipe(jscs())
-    .pipe(eslint())
-    .pipe(eslint.format())
-    .pipe(eslint.failOnError())
+    .on('error', function(e)
+    {
+    	console.log('jscs failed');
+    	this.emit('end');
+    })
+    // .pipe(eslint())
+    // .pipe(eslint.format(eslintPathFormatter))
+    // .pipe(eslint.failOnError())
     .pipe(complexity({
         	cyclomatic: [3, 7, 12],
             halstead: [8, 13, 20],
             maintainability: 100
         })
     );
+});
+
+gulp.task('test', function ()
+{
+    return gulp.src('src/client/roomForAlcohol.module.spec.js', {read: false})
+        // .pipe(mocha({reporter: 'mocha-lcov-reporter'}));
+        // .pipe(mocha({reporter: 'nyan'}));
+        .pipe(mocha({reporter: 'dot'}));
 });
 
 // coverage: {
@@ -69,15 +85,15 @@ gulp.task('analyze', function() {
 //             .pipe(mocha())
 //             .pipe(cover.gather())
 //             .pipe(cover.format())
-//             .pipe(gulp.dest('reports');
+//             .pipe(gulp.dest('reports'));
 // });
 
-gulp.task('test', function (done) {
-  karma.start({
-    configFile: CONFIG.karma.configFile,
-    singleRun: true
-  }, done);
-});
+// gulp.task('test', function (done) {
+//   karma.start({
+//     configFile: CONFIG.karma.configFile,
+//     singleRun: true
+//   }, done);
+// });
 
 gulp.task('copyIndex', function()
 {
