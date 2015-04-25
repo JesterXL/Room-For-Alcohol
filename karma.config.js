@@ -12,7 +12,7 @@ var bowerComponents = wiredep({
 if (bowerComponents) {
     files = files.concat(bowerComponents.js);
 }
-files = files.concat(BUILD_CONFIG.client.testFiles);
+files = files.concat(BUILD_CONFIG.karma.files);
 console.log("files:", files);
 module.exports = function(config) {
     'use strict';
@@ -56,16 +56,23 @@ module.exports = function(config) {
             'src/!(coverage)/**/!(*.spec).js': ['coverage']
         },
         // configure the reporter
+        // coverageReporter: {
+        //     dir: 'coverage',
+        //     reporters: [
+        //         {type: 'html', subdir: 'html'},
+        //         {type: 'text', subdir: '.'},
+        //         {type: 'lcovonly', subdir: '.'},
+        //         {type: 'json', subdir: '.'},
+        //         {type: 'cobertura', subdir: '.'}
+        //     ]
+        // },
+
         coverageReporter: {
-            dir: 'coverage',
-            reporters: [
-                {type: 'html', subdir: 'html'},
-                {type: 'text', subdir: '.'},
-                {type: 'lcovonly', subdir: '.'},
-                {type: 'json', subdir: '.'},
-                {type: 'cobertura', subdir: '.'}
-            ]
+          type : 'html',
+          dir : 'coverage/',
+          file : 'coverage.txt'
         },
+
         ngHtml2JsPreprocessor: {
             moduleName: BUILD_CONFIG.client.moduleName,
             stripPrefix: BUILD_CONFIG.client.baseDirectory

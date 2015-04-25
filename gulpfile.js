@@ -75,22 +75,27 @@ gulp.task('test', function (done)
 
 gulp.task('test2', function (done)
 {
-  gulp.src(CONFIG.client.testFiles)
-    .pipe(istanbul()) // Covering files
-    .pipe(istanbul.hookRequire()) // Force `require` to return covered files
-    .on('error', function(e){console.error('dat failure3:', e);})
-    .on('finish', function ()
-    {
-      gulp.src(CONFIG.client.testFiles)
-      karma.start({
+  // gulp.src(CONFIG.client.sourceFiles)
+  //   .pipe(istanbul()) // Covering files
+  //   .on('finish', function ()
+  //   {
+  //     gulp.src(CONFIG.client.testFiles)
+  //     karma.start({
+	 //    configFile: __dirname + '/' + CONFIG.karma.configFile,
+	 //    singleRun: true
+	 //  }, function()
+	 //  {
+	 //  	istanbul.writeReports() // Creating the reports after tests runned
+	 //  	done();
+	 //  });
+  //   });
+  karma.start({
 	    configFile: __dirname + '/' + CONFIG.karma.configFile,
 	    singleRun: true
 	  }, function()
 	  {
-	  	istanbul.writeReports() // Creating the reports after tests runned
 	  	done();
 	  });
-    });
 });
 
 // coverage: {
