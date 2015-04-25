@@ -12,6 +12,7 @@ var bowerComponents = wiredep({
 if (bowerComponents) {
     files = files.concat(bowerComponents.js);
 }
+files = files.concat(BUILD_CONFIG.client.testFiles);
 console.log("files:", files);
 module.exports = function(config) {
     'use strict';
@@ -24,7 +25,7 @@ module.exports = function(config) {
             'chai',
             'sinon'
         ],
-        files: files.concat(BUILD_CONFIG.karma.files),
+        files: files,
         client: {
             mocha: {
                 ui: 'bdd'
@@ -66,7 +67,7 @@ module.exports = function(config) {
             ]
         },
         ngHtml2JsPreprocessor: {
-            moduleName: 'room-for-alcohol',
+            moduleName: BUILD_CONFIG.client.moduleName,
             stripPrefix: BUILD_CONFIG.client.baseDirectory
         }
     });

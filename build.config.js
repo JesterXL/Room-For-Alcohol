@@ -8,6 +8,7 @@ var config = {
     baseDirectory: 'src/client',
     sourceFiles:     ['*.js', '**/*.js', '!*.spec.js', '!**/*.spec.js', '!Gruntfile.js', '!gulpfile.js'],
     testFiles:       ['*.spec.js', '**/*.spec.js'],
+    globals: ['angular'],
     lessFiles:  {'build/roomForAlcohol.css': 'src/client/roomForAlcohol.less'},
     buildDirectory:  'build',
     coverageDirectory: 'coverage',
@@ -48,8 +49,8 @@ var config = {
   },
 
   karma: {
-    configFile: 'karma.conf.js',
-    files: ['src/client/roomForAlcohol.route.spec.js']
+    configFile: 'karma.config.js',
+    moduleName: 'room-for-alcohol'
   },
 
   staticServer: {

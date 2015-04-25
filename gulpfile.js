@@ -22,6 +22,7 @@ var mocha 		= require('gulp-mocha');
 var  mochaLcovReporter = require('mocha-lcov-reporter');
 var coverage = require('gulp-coverage');
 var open = require('gulp-open');
+var istanbul = require('gulp-istanbul');
 
 var CONFIG 		= require('./build.config');
 
@@ -56,22 +57,40 @@ gulp.task('analyze', function() {
     );
 });
 
-gulp.task('test', function ()
+gulp.task('test', function (done)
 {
-    return gulp.src('src/client/roomForAlcohol.module.spec.js', {read: false})
-    	.pipe(coverage.instrument({
-            pattern: ['**/*.spec.*'],
-            debugDirectory: 'debug'
-        }))
-        .on('error', function(e){console.error('dat failure1:', e);})
-        .pipe(mocha({reporter: 'dot'}))
-        .on('error', function(e){console.error('dat failure2:', e);})
-        .pipe(coverage.gather())
-        .on('error', function(e){console.error('dat failure3:', e);})
-        .pipe(coverage.format())
-        .on('error', function(e){console.error('dat failure4:', e);})
-        .pipe(gulp.dest('reports'));
-        // .pipe(open('reports/coverage.html'));
+    gulp.src(CONFIG.client.testFiles)
+        .pipe(istanbul()) // Covering files
+	    .pipe(istanbul.hookRequire()) // Force `require` to return covered files
+	    .on('error', function(e){console.error('dat failure3:', e);})
+	    .on('finish', function () {
+	      gulp.src(CONFIG.client.testFiles)
+	        .pipe(mocha({reporter: 'dot', globals: CONFIG.client.globals}))
+	        .on('error', function(e){console.error('dat failure4:', e);})
+	        .pipe(istanbul.writeReports()) // Creating the reports after tests runned
+	        .on('error', function(e){console.error('dat failure5:', e);})
+	        .on('end', done);
+	    });
+});
+
+gulp.task('test2', function (done)
+{
+  gulp.src(CONFIG.client.testFiles)
+    .pipe(istanbul()) // Covering files
+    .pipe(istanbul.hookRequire()) // Force `require` to return covered files
+    .on('error', function(e){console.error('dat failure3:', e);})
+    .on('finish', function ()
+    {
+      gulp.src(CONFIG.client.testFiles)
+      karma.start({
+	    configFile: __dirname + '/' + CONFIG.karma.configFile,
+	    singleRun: true
+	  }, function()
+	  {
+	  	istanbul.writeReports() // Creating the reports after tests runned
+	  	done();
+	  });
+    });
 });
 
 // coverage: {
@@ -144,7 +163,8 @@ gulp.task('watch', function()
 
 gulp.task('clean', function()
 {
-	gulp.src('./build', {read: false})
+	var variousFilesAndDirs = ['./build', '.coverdata', 'coverage', 'debug', 'reports', '.coverrun'];
+	return gulp.src(variousFilesAndDirs, {read: false})
 			.pipe(vinylPaths(del));
 });
 

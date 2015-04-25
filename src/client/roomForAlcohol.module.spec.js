@@ -1,6 +1,5 @@
 /* jshint -W117, -W030 */
 'use strict';
-var expect = require('chai').expect;
 
 describe('Main app module:', function() {
     describe('roomForAlcohol', function() {
@@ -12,6 +11,8 @@ describe('Main app module:', function() {
         {
           expect(true).to.be.true;
         });
+        
+
         // it('should exist', function() {
         //    module('roomForAlcohol');
         //    inject(function($rootScope) {
