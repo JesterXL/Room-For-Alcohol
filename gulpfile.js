@@ -20,6 +20,8 @@ var eslint 		= require('gulp-eslint');
 var eslintPathFormatter = require('eslint-path-formatter');
 var mocha 		= require('gulp-mocha');
 var  mochaLcovReporter = require('mocha-lcov-reporter');
+var coverage = require('gulp-coverage');
+var open = require('gulp-open');
 
 var CONFIG 		= require('./build.config');
 
@@ -57,9 +59,19 @@ gulp.task('analyze', function() {
 gulp.task('test', function ()
 {
     return gulp.src('src/client/roomForAlcohol.module.spec.js', {read: false})
-        // .pipe(mocha({reporter: 'mocha-lcov-reporter'}));
-        // .pipe(mocha({reporter: 'nyan'}));
-        .pipe(mocha({reporter: 'dot'}));
+    	.pipe(coverage.instrument({
+            pattern: ['**/*.spec.*'],
+            debugDirectory: 'debug'
+        }))
+        .on('error', function(e){console.error('dat failure1:', e);})
+        .pipe(mocha({reporter: 'dot'}))
+        .on('error', function(e){console.error('dat failure2:', e);})
+        .pipe(coverage.gather())
+        .on('error', function(e){console.error('dat failure3:', e);})
+        .pipe(coverage.format())
+        .on('error', function(e){console.error('dat failure4:', e);})
+        .pipe(gulp.dest('reports'));
+        // .pipe(open('reports/coverage.html'));
 });
 
 // coverage: {

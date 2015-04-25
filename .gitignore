@@ -5,3 +5,11 @@
 /coverage/
 
 /build/
+
+/reports/
+
+/debug/
+
+/.coverdata/
+
+/.coverrun
