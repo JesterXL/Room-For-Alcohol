@@ -82,7 +82,6 @@ gulp.task('judge', function(done)
     .pipe(jscs())
     .on('error', function(e)
     {
-    	console.log('jscs failed');
     	this.emit('end');
     })
     .pipe(eslint())
@@ -94,6 +93,10 @@ gulp.task('judge', function(done)
             maintainability: 100
         })
     )
+    .on('error', function(e)
+    {
+    	this.emit('end');
+    })
     .on('finish', function()
     {
     	karma.start({
@@ -104,47 +107,12 @@ gulp.task('judge', function(done)
 		  	done();
 		  })
     });
-
     
 });
 
-
-// coverage: {
-//             server: {
-//                 options: {
-//                     dir: CONFIG.client.coverageDirectory,
-//                     coverageThresholds: {
-//                      'statements': 80,
-//                      'branches':   80,
-//                      'lines':      80,
-//                      'functions':  80
-//                     }
-//                 }
-//             }
-//         },
-
-// gulp.task('test', function () {
-//     return gulp.src(CONFIG.client.testFiles, { read: false })
-//             .pipe(cover.instrument({
-//                 pattern: ['**/*.spec.*'],
-//                 debugDirectory: 'debug'
-//             }))
-//             .pipe(mocha())
-//             .pipe(cover.gather())
-//             .pipe(cover.format())
-//             .pipe(gulp.dest('reports'));
-// });
-
-// gulp.task('test', function (done) {
-//   karma.start({
-//     configFile: CONFIG.karma.configFile,
-//     singleRun: true
-//   }, done);
-// });
-
 gulp.task('copyIndex', function()
 {
-	gulp.src('src/client/index.html')
+	return gulp.src('src/client/index.html')
 	.pipe(wiredep({ignorePath: "../../"}))
 	.pipe(gulp.dest('./build'))
 	.pipe(browserSync.reload({stream: true}));
@@ -153,28 +121,29 @@ gulp.task('copyIndex', function()
 gulp.task('inject', function()
 {
 	var sources = gulp.src(CONFIG.client.sourceFiles, {read: false});
-	gulp.src('./build/index.html')
+	return gulp.src('./build/index.html')
 	.pipe(inject(sources, {ignorePath: '/src/client/'}))
 	.pipe(gulp.dest('./build'))
 	.pipe(browserSync.reload({stream: true}));
 });
 
-gulp.task('copy', function()
+gulp.task('copyJS', function()
 {
-	gulp.src(CONFIG.client.sourceFiles)
+	return gulp.src(CONFIG.client.sourceFiles)
     .pipe(gulp.dest('./build'));
 });
 
-gulp.task('browserSync', function()
+gulp.task('browserSync', function(done)
 {
 	browserSync({
 		startPath: 'index.html'
 	});
+	done();
 });
 
 gulp.task('watch', function()
 {
-	gulp.watch(['src/client/index.html', 'src/client/**/*.ts'], ['clean', 'copy', 'copyIndex', 'inject']);
+	gulp.watch(['src/client/index.html', 'src/client/**/*.js'], ['clean', 'copyJS', 'copyIndex', 'inject']);
 });
 
 gulp.task('clean', function()
@@ -183,19 +152,20 @@ gulp.task('clean', function()
 			.pipe(vinylPaths(del));
 });
 
-gulp.task('start', function ()
+gulp.task('start', function (done)
 {
   nodemon({
 	    script: 'src/static/app.js',
 	    ext: 'js',
 	  	env: { 'NODE_ENV': 'development' },
-	  	tasks: ['clean', 'copy', 'copyIndex', 'inject']
+	  	tasks: ['clean', 'copyJS', 'copyIndex', 'inject']
   	});
+  done();
 });
 
 gulp.task('default', [
 	'clean', 
-	'copy', 
+	'copyJS', 
 	'copyIndex', 
 	'inject', 
 	'browserSync', 
