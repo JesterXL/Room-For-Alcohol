@@ -21,19 +21,22 @@
         		vm.workoutEnabled = false;
         		vm.workoutTab = '';
         	}
-        	else
+        	else if(toState == 'workout')
         	{
         		vm.macrosEnabled = false;
         		vm.macrosTab = '';
         		vm.workoutEnabled = true;
         		vm.workoutTab = 'tab';
         	}
+            else
+            {
+                vm.macrosEnabled = false;
+                vm.macrosTab = '';
+                vm.workoutEnabled = false;
+                vm.workoutTab = '';
+            }
         };
-
-        vm.onGotoShipParam = function()
-        {
-            $location.url('/ships/10');
-        };
+        
 
         $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams)
         {

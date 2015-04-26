@@ -19,9 +19,6 @@ describe('Main app module:', function() {
                scope = $rootScope.$new();
            });
            expect(scope).to.be.ok;
-
-           
-           
         });
     });
 });
