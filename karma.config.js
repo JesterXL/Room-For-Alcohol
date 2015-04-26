@@ -56,21 +56,15 @@ module.exports = function(config) {
             'src/!(coverage)/**/!(*.spec).js': ['coverage']
         },
         // configure the reporter
-        // coverageReporter: {
-        //     dir: 'coverage',
-        //     reporters: [
-        //         {type: 'html', subdir: 'html'},
-        //         {type: 'text', subdir: '.'},
-        //         {type: 'lcovonly', subdir: '.'},
-        //         {type: 'json', subdir: '.'},
-        //         {type: 'cobertura', subdir: '.'}
-        //     ]
-        // },
-
         coverageReporter: {
-          type : 'html',
-          dir : 'coverage/',
-          file : 'coverage.txt'
+            dir: 'coverage',
+            reporters: [
+                {type: 'html', subdir: 'html'},
+                {type: 'text', subdir: '.'},
+                {type: 'lcovonly', subdir: '.'},
+                {type: 'json', subdir: '.'},
+                {type: 'cobertura', subdir: '.'}
+            ]
         },
 
         ngHtml2JsPreprocessor: {
