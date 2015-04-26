@@ -21,27 +21,27 @@
             .state('workout', {
                 url: '/workout',
                 template: '<rfa-workout></rfa-workout>'
-            })
+            });
             
-            .state('shipsType', {
-                url: '/ships/:param',
-                templateProvider: function ($timeout, $stateParams) {
-                    return function()
-                    {
-                        return '<h1>Ships Param</h1>';
-                    };
-                }
-            })
-            .state('shipsDecks', {
-                url: '/ships/deckplans',
-                template: '<h1>Ship Deck Plans</h1>'
-            })
+            // .state('shipsType', {
+            //     url: '/ships/:param',
+            //     templateProvider: function ($timeout, $stateParams) {
+            //         return function()
+            //         {
+            //             return '<h1>Ships Param</h1>';
+            //         };
+            //     }
+            // })
+            // .state('shipsDecks', {
+            //     url: '/ships/deckplans',
+            //     template: '<h1>Ship Deck Plans</h1>'
+            // })
 
-            .state('ships', {
-                url: '/ships',
-                template: '<h1>Ships</h1>'
-            })
-            ;
+            // .state('ships', {
+            //     url: '/ships',
+            //     template: '<h1>Ships</h1>'
+            // })
+            // ;
     }
 
     /* @ngInject */

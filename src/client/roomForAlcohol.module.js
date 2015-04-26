@@ -3,6 +3,7 @@
 
     angular
         .module('roomForAlcohol', [
+            'ui.router'
             ])
         .run(init);
 

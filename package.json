@@ -34,6 +34,7 @@
     "gulp-istanbul": "^0.8.1",
     "gulp-jscs": "^1.6.0",
     "gulp-jshint": "^1.10.0",
+    "gulp-merge": "^0.1.0",
     "gulp-mocha": "^2.0.1",
     "gulp-nodemon": "^2.0.2",
     "gulp-open": "^0.3.2",

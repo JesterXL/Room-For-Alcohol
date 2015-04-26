@@ -23,7 +23,8 @@ var  mochaLcovReporter = require('mocha-lcov-reporter');
 var coverage = require('gulp-coverage');
 var open = require('gulp-open');
 var istanbul = require('gulp-istanbul');
-var Promise = require('Bluebird');
+// var Promise = require('Bluebird');
+var merge = require('gulp-merge');
 
 var CONFIG 		= require('./build.config');
 
@@ -31,6 +32,10 @@ gulp.task('hello', function()
 {
 	console.log('Waaazzuuuuuppp');
 });
+
+// **********************************************************************
+// **********************************************************************
+// **********************************************************************
 
 gulp.task('analyze', function() {
   return gulp.src(CONFIG.client.sourceFiles)
@@ -110,7 +115,20 @@ gulp.task('judge', function(done)
     
 });
 
-gulp.task('copyIndex', function()
+// **********************************************************************
+// **********************************************************************
+// **********************************************************************
+
+gulp.task('clean', function(done)
+{
+    del(CONFIG.buildFilesAndDirectoriesToClean, function()
+        {
+            console.log("clean done");
+            done();
+        });
+});
+
+gulp.task('copyIndex', ['clean'], function()
 {
 	return gulp.src('src/client/index.html')
 	.pipe(wiredep({ignorePath: "../../"}))
@@ -118,7 +136,7 @@ gulp.task('copyIndex', function()
 	.pipe(browserSync.reload({stream: true}));
 });
 
-gulp.task('inject', function()
+gulp.task('inject', ['copyIndex'], function()
 {
 	var sources = gulp.src(CONFIG.client.sourceFiles, {read: false});
 	return gulp.src('./build/index.html')
@@ -127,7 +145,7 @@ gulp.task('inject', function()
 	.pipe(browserSync.reload({stream: true}));
 });
 
-gulp.task('copyJS', function()
+gulp.task('copyJS', ['clean'], function()
 {
 	return gulp.src(CONFIG.client.sourceFiles)
     .pipe(gulp.dest('./build'));
@@ -136,29 +154,31 @@ gulp.task('copyJS', function()
 gulp.task('browserSync', function(done)
 {
 	browserSync({
-		startPath: 'index.html'
+		baseDir: 'build/index.html'
 	});
 	done();
 });
 
 gulp.task('watch', function()
 {
-	gulp.watch(['src/client/index.html', 'src/client/**/*.js'], ['clean', 'copyJS', 'copyIndex', 'inject']);
+	gulp.watch([
+        'src/client/index.html', 
+        'src/client/**/*.js'], 
+        ['clean', 'copyJS', 'copyIndex', 'inject'])
+    .on('change', function(sup)
+    {
+        browserSync.reload();
+    });
 });
 
-gulp.task('clean', function()
-{
-	return gulp.src(CONFIG.buildFilesAndDirectoriesToClean, {read: false})
-			.pipe(vinylPaths(del));
-});
+
 
 gulp.task('start', function (done)
 {
   nodemon({
 	    script: 'src/static/app.js',
 	    ext: 'js',
-	  	env: { 'NODE_ENV': 'development' },
-	  	tasks: ['clean', 'copyJS', 'copyIndex', 'inject']
+	  	env: { 'NODE_ENV': 'development' }
   	});
   done();
 });
@@ -169,5 +189,6 @@ gulp.task('default', [
 	'copyIndex', 
 	'inject', 
 	'browserSync', 
+    'watch',
 	'start'
 ]);
