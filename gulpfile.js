@@ -230,7 +230,7 @@ gulp.task('start', function (done)
   nodemon({
 	    script: 'src/static/app.js',
 	    ext: 'js html',
-        ignore: ['Gruntfile.js', 'gulpfile.js'],
+        ignore: ['Gruntfile.js', 'gulpfile.js', 'node_modules', 'bower_components'],
 	  	env: { 'NODE_ENV': 'development' },
         tasks: ['clean', 'copy', 'inject']
   	});
