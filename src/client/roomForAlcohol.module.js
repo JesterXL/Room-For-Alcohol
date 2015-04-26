@@ -4,7 +4,12 @@
     console.log("Here we go...");
 
     angular
-        .module('roomForAlcohol', [])
+        .module('roomForAlcohol', [
+            'ui.router',
+            'main',
+            'main.dateChooser',
+            'main.macros'
+            ])
         .run(init);
 
        /* @ngInject */

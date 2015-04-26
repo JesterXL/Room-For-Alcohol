@@ -145,10 +145,15 @@ gulp.task('inject', ['copyIndex'], function()
 	.pipe(browserSync.reload({stream: true}));
 });
 
-gulp.task('copyJS', ['clean'], function()
+gulp.task('copy', ['clean'], function()
 {
-	return gulp.src(CONFIG.client.sourceFiles)
+	var jsStream = gulp.src(CONFIG.client.sourceFiles)
     .pipe(gulp.dest('./build'));
+
+    var templateStream = gulp.src(CONFIG.client.templateFiles)
+    .pipe(gulp.dest('./build'));
+
+    return merge(jsStream, templateStream);
 });
 
 gulp.task('browserSync', function(done)
@@ -164,7 +169,7 @@ gulp.task('watch', function()
 	gulp.watch([
         'src/client/index.html', 
         'src/client/**/*.js'], 
-        ['clean', 'copyJS', 'copyIndex', 'inject'])
+        ['clean', 'copy', 'copyIndex', 'inject'])
     .on('change', function(sup)
     {
         browserSync.reload();
@@ -175,7 +180,7 @@ gulp.task('start', function (done)
 {
   nodemon({
 	    script: 'src/static/app.js',
-	    ext: 'js',
+	    ext: 'js html',
 	  	env: { 'NODE_ENV': 'development' }
   	});
   done();
@@ -183,7 +188,7 @@ gulp.task('start', function (done)
 
 gulp.task('default', [
 	'clean', 
-	'copyJS', 
+	'copy', 
 	'copyIndex', 
 	'inject', 
 	'browserSync', 

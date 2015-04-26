@@ -15,6 +15,7 @@ var config = {
                       '!**/*.spec.js', 
                       '!Gruntfile.js', 
                       '!gulpfile.js'],
+    templateFiles: ['*.directive.html', '**/*.directive.html'],
     testFiles:       ['*.spec.js', '**/*.spec.js'],
     globals: ['angular'],
     lessFiles:  {'build/roomForAlcohol.css': 'src/client/roomForAlcohol.less'},
@@ -52,29 +53,10 @@ var config = {
 
   normalizeSourceFiles: function()
   {
-    config.client.sourceFiles = config.prefixPath(config.client.sourceFiles, config.client.baseDirectory);
-    config.client.testFiles = config.prefixPath(config.client.testFiles, config.client.baseDirectory);
-    // config.client.sourceFiles.sort(function(fileA, fileB)
-    // {
-    //   var aModule = fileA.indexOf('.module.') > -1;
-    //   var bModule = fileB.indexOf('.module.') > -1;
-    //   if(aModule === true && bModule === true)
-    //   {
-    //     return 0;
-    //   }
-    //   else if(aModule === true && bModule === false)
-    //   {
-    //     return -1;
-    //   }
-    //   else if(aModule === false && bModule === true)
-    //   {
-    //     return 1;
-    //   }
-    //   else
-    //   {
-    //     return 0;
-    //   }
-    // });
+    var base = config.client;
+    base.sourceFiles = config.prefixPath(base.sourceFiles, base.baseDirectory);
+    base.testFiles = config.prefixPath(base.testFiles, base.baseDirectory);
+    base.templateFiles = config.prefixPath(base.templateFiles, base.baseDirectory);
   },
 
   karma: {
