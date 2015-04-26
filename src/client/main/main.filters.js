@@ -5,7 +5,6 @@
 
     function percentFilter()
     {
-    	
     	return function(input)
     	{
     		if(typeof input !== 'undefined')
