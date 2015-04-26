@@ -13,15 +13,15 @@ describe('Main app module:', function() {
         });
         
 
-        // it('should exist', function() {
-        //    module('roomForAlcohol');
-        //    inject(function($rootScope) {
-        //        scope = $rootScope.$new();
-        //    });
-        //    expect(scope).to.be.ok;
+        it('should exist', function() {
+           module('roomForAlcohol');
+           inject(function($rootScope) {
+               scope = $rootScope.$new();
+           });
+           expect(scope).to.be.ok;
 
            
            
-        // });
+        });
     });
 });

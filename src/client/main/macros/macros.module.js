@@ -7,8 +7,7 @@
             'main.currentDateModel',
             'main.macros.calorieCounter',
             'main.macros.macroTargets',
-            'main.macros.foodList',
-            'LocalStorageModule'
+            'main.macros.foodList'
             ]);
 
 })();

@@ -7,7 +7,14 @@ var config = {
 
   client: {
     baseDirectory: 'src/client',
-    sourceFiles:     ['*.js', '**/*.js', '!*.spec.js', '!**/*.spec.js', '!Gruntfile.js', '!gulpfile.js'],
+    sourceFiles:     ['*.module.js',
+                      '*.js', 
+                      '**/*.module.js',
+                      '**/*.js', 
+                      '!*.spec.js', 
+                      '!**/*.spec.js', 
+                      '!Gruntfile.js', 
+                      '!gulpfile.js'],
     testFiles:       ['*.spec.js', '**/*.spec.js'],
     globals: ['angular'],
     lessFiles:  {'build/roomForAlcohol.css': 'src/client/roomForAlcohol.less'},
@@ -47,6 +54,27 @@ var config = {
   {
     config.client.sourceFiles = config.prefixPath(config.client.sourceFiles, config.client.baseDirectory);
     config.client.testFiles = config.prefixPath(config.client.testFiles, config.client.baseDirectory);
+    // config.client.sourceFiles.sort(function(fileA, fileB)
+    // {
+    //   var aModule = fileA.indexOf('.module.') > -1;
+    //   var bModule = fileB.indexOf('.module.') > -1;
+    //   if(aModule === true && bModule === true)
+    //   {
+    //     return 0;
+    //   }
+    //   else if(aModule === true && bModule === false)
+    //   {
+    //     return -1;
+    //   }
+    //   else if(aModule === false && bModule === true)
+    //   {
+    //     return 1;
+    //   }
+    //   else
+    //   {
+    //     return 0;
+    //   }
+    // });
   },
 
   karma: {

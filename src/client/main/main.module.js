@@ -7,6 +7,12 @@
             'main.dateChooser',
             'main.macros',
             'main.workout'
-            ]);
+            ])
+        .run(init);
+
+        function init()
+        {
+        	console.log('main::module');
+        }
         
 })();

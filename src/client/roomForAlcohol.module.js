@@ -1,10 +1,10 @@
 (function() {
     'use strict';
 
+    console.log("Here we go...");
+
     angular
-        .module('roomForAlcohol', [
-            'ui.router'
-            ])
+        .module('roomForAlcohol', [])
         .run(init);
 
        /* @ngInject */
