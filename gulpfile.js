@@ -23,6 +23,7 @@ var  mochaLcovReporter = require('mocha-lcov-reporter');
 var coverage = require('gulp-coverage');
 var open = require('gulp-open');
 var istanbul = require('gulp-istanbul');
+var Promise = require('Bluebird');
 
 var CONFIG 		= require('./build.config');
 
@@ -38,57 +39,27 @@ gulp.task('analyze', function() {
     .pipe(jshint.reporter('fail'))
     .on('error', function(e)
     {
-    	this.emit('end');
+    	console.warn('jshint failed.');
     })
     .pipe(jscs())
     .on('error', function(e)
     {
-    	console.log('jscs failed');
-    	this.emit('end');
+    	console.warn('jscs failed');
     })
-    // .pipe(eslint())
-    // .pipe(eslint.format(eslintPathFormatter))
-    // .pipe(eslint.failOnError())
     .pipe(complexity({
         	cyclomatic: [3, 7, 12],
             halstead: [8, 13, 20],
             maintainability: 100
         })
-    );
+    )
+    .on('error', function(e)
+    {
+    	console.warn('complexity failed');
+    });
 });
 
 gulp.task('test', function (done)
 {
-    gulp.src(CONFIG.client.testFiles)
-        .pipe(istanbul()) // Covering files
-	    .pipe(istanbul.hookRequire()) // Force `require` to return covered files
-	    .on('error', function(e){console.error('dat failure3:', e);})
-	    .on('finish', function () {
-	      gulp.src(CONFIG.client.testFiles)
-	        .pipe(mocha({reporter: 'dot', globals: CONFIG.client.globals}))
-	        .on('error', function(e){console.error('dat failure4:', e);})
-	        .pipe(istanbul.writeReports()) // Creating the reports after tests runned
-	        .on('error', function(e){console.error('dat failure5:', e);})
-	        .on('end', done);
-	    });
-});
-
-gulp.task('test2', function (done)
-{
-  // gulp.src(CONFIG.client.sourceFiles)
-  //   .pipe(istanbul()) // Covering files
-  //   .on('finish', function ()
-  //   {
-  //     gulp.src(CONFIG.client.testFiles)
-  //     karma.start({
-	 //    configFile: __dirname + '/' + CONFIG.karma.configFile,
-	 //    singleRun: true
-	 //  }, function()
-	 //  {
-	 //  	istanbul.writeReports() // Creating the reports after tests runned
-	 //  	done();
-	 //  });
-  //   });
   karma.start({
 	    configFile: __dirname + '/' + CONFIG.karma.configFile,
 	    singleRun: true
@@ -97,6 +68,46 @@ gulp.task('test2', function (done)
 	  	done();
 	  });
 });
+
+gulp.task('judge', function(done)
+{
+	gulp.src(CONFIG.client.sourceFiles)
+    .pipe(jshint())
+    .pipe(jshint.reporter('jshint-stylish'))
+    .pipe(jshint.reporter('fail'))
+    .on('error', function(e)
+    {
+    	this.emit('end');
+    })
+    .pipe(jscs())
+    .on('error', function(e)
+    {
+    	console.log('jscs failed');
+    	this.emit('end');
+    })
+    .pipe(eslint())
+    .pipe(eslint.format(eslintPathFormatter))
+    .pipe(eslint.failOnError())
+    .pipe(complexity({
+        	cyclomatic: [3, 7, 12],
+            halstead: [8, 13, 20],
+            maintainability: 100
+        })
+    )
+    .on('finish', function()
+    {
+    	karma.start({
+	    configFile: __dirname + '/' + CONFIG.karma.configFile,
+	    singleRun: true
+		  }, function()
+		  {
+		  	done();
+		  })
+    });
+
+    
+});
+
 
 // coverage: {
 //             server: {
@@ -168,8 +179,7 @@ gulp.task('watch', function()
 
 gulp.task('clean', function()
 {
-	var variousFilesAndDirs = ['./build', '.coverdata', 'coverage', 'debug', 'reports', '.coverrun'];
-	return gulp.src(variousFilesAndDirs, {read: false})
+	return gulp.src(CONFIG.buildFilesAndDirectoriesToClean, {read: false})
 			.pipe(vinylPaths(del));
 });
 

@@ -18,6 +18,7 @@
   "homepage": "https://github.com:JesterXL/Room-For-Alcohol.git",
   "devDependencies": {
     "angular-mocks": "^1.3.15",
+    "bluebird": "^2.9.24",
     "browser-sync": "^2.4.0",
     "browserify": "^9.0.3",
     "chai": "^2.2.0",

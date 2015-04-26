@@ -2,7 +2,8 @@
 var packageJSON = require('./package.json');
 
 var config = {
-  
+
+  buildFilesAndDirectoriesToClean: ['build', 'coverage', 'reports'],
 
   client: {
     baseDirectory: 'src/client',
