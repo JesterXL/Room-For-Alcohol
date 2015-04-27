@@ -80,6 +80,10 @@
 
             changeAmountForFood: function(food, newAmount)
             {
+                if(newAmount < 0)
+                {
+                    newAmount = 0;
+                }
                 food.amount = newAmount;
                 target._updateTotalFoodCaloriesAndMacros(target);
             },
@@ -98,6 +102,7 @@
                 var totalProtein           = 0;
                 var totalCarbs             = 0;
                 var totalFat               = 0;
+
                 _.forEach(macroTarget.foods, function(food)
                 {
                     _food        += food.calories * food.amount;
@@ -105,10 +110,11 @@
                     totalCarbs   += food.carbs * food.amount;
                     totalFat     += food.fat * food.amount;
                 });
+
                 var totalCalories          = (totalProtein * 4) + (totalCarbs * 4) + (totalFat * 9);
                 macroTarget.proteinCurrent = (totalProtein * 4) / totalCalories;
                 macroTarget.carbsCurrent   = (totalCarbs * 4) / totalCalories;
-                macroTarget.fatCurrent     = (totalFat * 4) / totalCalories;
+                macroTarget.fatCurrent     = (totalFat * 9) / totalCalories;
                 // $rootScope.$broadcast('macrosChanged');
             }
         };

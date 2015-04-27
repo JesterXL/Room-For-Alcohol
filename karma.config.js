@@ -36,7 +36,7 @@ module.exports = function(config) {
         browsers: ['PhantomJS'],
         singleRun: true,
         colors: true,
-        logLevel: config.LOG_INFO,
+        logLevel: config.LOG_ERROR,
         reporters: ['progress', 'coverage'],
         junitReporter: {
             outputFile: 'build/reports/karma-report.xml'

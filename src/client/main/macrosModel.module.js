@@ -2,8 +2,7 @@
     'use strict';
 
     angular
-        .module('main.macrosModel', [
-            ])
+        .module('main.macrosModel', [])
         .factory('macrosModel', macrosModel);
 
     /* @ngInject */
