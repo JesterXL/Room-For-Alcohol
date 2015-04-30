@@ -27,6 +27,7 @@ module.exports = function(config) {
         ],
         files: files,
         client: {
+            captureConsole: true,
             mocha: {
                 ui: 'bdd'
             }
@@ -34,10 +35,12 @@ module.exports = function(config) {
         exclude: [],
         port: 8180,
         browsers: ['PhantomJS'],
-        singleRun: true,
+        singleRun: false,
+        continous: true,
         colors: true,
         logLevel: config.LOG_ERROR,
-        reporters: ['progress', 'coverage'],
+        // reporters: ['progress', 'coverage'],
+        reporters: ['progress'],
         junitReporter: {
             outputFile: 'build/reports/karma-report.xml'
         },

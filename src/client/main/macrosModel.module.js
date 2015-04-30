@@ -58,9 +58,7 @@
 
             _parseMacroTargetFromDTO: function(macroTargetDTO)
             {
-                return new macroTarget().init(macroTargetDTO.goal, 
-                                                macroTargetDTO.food,
-                                                macroTargetDTO.exercise);
+                return new macroTarget().init(macroTargetDTO);
             }
         };
         

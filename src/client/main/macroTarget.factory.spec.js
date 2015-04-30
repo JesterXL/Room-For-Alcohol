@@ -14,7 +14,7 @@ describe('macro target', function()
   {
     inject(function(macroTarget)
     {
-      service = macroTarget;
+      service = new macroTarget();
     });
   });
 
@@ -53,7 +53,7 @@ describe('macro target', function()
 
     it('days defaults to 0', function()
     {
-      expect(service.days).to.equal(0);
+      expect(service.days).to.be.empty;
     });
 
     it('protein defaults to 0', function()
