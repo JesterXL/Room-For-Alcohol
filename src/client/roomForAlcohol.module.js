@@ -15,7 +15,7 @@
        /* @ngInject */
     function init($state)
     {
-        console.log('roomForAlcohol::init');
+        // console.log('roomForAlcohol::init');
         // if($state.current.name == '')
         // {
         //     $state.go('macros');

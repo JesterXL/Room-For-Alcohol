@@ -50,10 +50,12 @@
 
             getMacroTargetForDate: function(date)
             {
-                return _.find(_macros, function(macroTarget)
+                var result = _.find(_macros, function(macroTarget)
                 {
-                    return _.includes(macroTarget.days, date.getDay());
+                    var dayResult = _.includes(macroTarget.days, date.getDay());
+                    return dayResult;
                 });
+                return result;
             },
 
             _parseMacroTargetFromDTO: function(macroTargetDTO)

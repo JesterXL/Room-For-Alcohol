@@ -5,7 +5,7 @@ describe('macros model', function()
 {
   var factory;
   var dailyMacros = [{
-      days: [0, 2, 4, 6],
+      days: [0, 3, 5],
       protein: 0.45,
       carbs: 0.08,
       fat: 0.42,
@@ -21,7 +21,7 @@ describe('macros model', function()
     },
 
     {
-      days: [1, 3, 5],
+      days: [1, 2, 4, 6],
       protein: 0.32,
       carbs: 0.48,
       fat: 0.2,
@@ -174,6 +174,91 @@ describe('macros model', function()
       });
 
   });
+
+  function setDay(date, targetDay)
+  {
+    while(date.getDay() != targetDay)
+    {
+      date.setDate(date.getDate() - 1);
+    }
+    return date;
+  }
+
+  describe('getting macros for dates', function()
+  {
+    beforeEach(function()
+    {
+      factory.macros = dailyMacros;
+    });
+
+    afterEach(function()
+    {
+      factory.macros = [];
+    });
+
+    it('carb day Sunday', function()
+    {
+      var sunday = new Date();
+      setDay(sunday, 0);
+      var macroTarget = factory.getMacroTargetForDate(sunday);
+      expect(macroTarget.goal).to.equal(2000);
+    });
+
+    it('fat day Saturday', function()
+    {
+      var saturday = new Date();
+      setDay(saturday, 6);
+      var macroTarget = factory.getMacroTargetForDate(saturday);
+      expect(macroTarget.goal).to.equal(1650);
+    });
+
+    it('eight days still gives you results', function()
+    {
+      var sunday = new Date();
+      setDay(sunday, 0);
+      var days = 9;
+      var macroTarget;
+      for(var i=0; i<days; i++)
+      {
+        sunday.setDate(sunday.getDate() + 1);
+        macroTarget = factory.getMacroTargetForDate(sunday);
+        expect(macroTarget).to.be.defined;
+      }
+      expect(true).to.be.true;  
+    });
+
+    it('a fubared date gives you nuffing', function()
+    {
+      var macroTarget;
+      var callback = function()
+      {
+        macroTarget = factory.getMacroTargetForDate();
+      };
+      expect(callback).to.throw(Error);
+    });
+
+    it('an undefined date gives you nuffing', function()
+    {
+      var macroTarget;
+      var callback = function()
+      {
+        macroTarget = factory.getMacroTargetForDate(undefined);
+      };
+      expect(callback).to.throw(Error);
+    });
+
+    it('a null date gives you nuffing', function()
+    {
+      var macroTarget;
+      var callback = function()
+      {
+        macroTarget = factory.getMacroTargetForDate(null);
+      };
+      expect(callback).to.throw(Error);
+    });
+
+  });
+
  
 
 });
