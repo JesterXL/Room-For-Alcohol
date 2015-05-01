@@ -67,11 +67,22 @@ gulp.task('test', function (done)
 {
   karma.start({
 	    configFile: __dirname + '/' + CONFIG.karma.configFile,
-	    singleRun: false
+	    singleRun: true
 	  }, function()
 	  {
 	  	done();
 	  });
+});
+
+gulp.task('testWhileICode', function(done)
+{
+    karma.start({
+        configFile: __dirname + '/' + CONFIG.karma.configFile,
+        singleRun: false
+      }, function()
+      {
+        done();
+      });
 });
 
 gulp.task('judge', function(done)

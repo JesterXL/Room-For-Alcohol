@@ -24,6 +24,7 @@ module.exports = function(config) {
             'mocha',
             'chai',
             'sinon'
+
         ],
         files: files,
         client: {
@@ -39,8 +40,8 @@ module.exports = function(config) {
         continous: true,
         colors: true,
         logLevel: config.LOG_ERROR,
-        // reporters: ['progress', 'coverage'],
-        reporters: ['progress'],
+        reporters: ['progress', 'coverage'],
+        // reporters: ['progress'],
         junitReporter: {
             outputFile: 'build/reports/karma-report.xml'
         },

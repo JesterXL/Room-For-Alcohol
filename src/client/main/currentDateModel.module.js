@@ -7,7 +7,7 @@
         .factory('currentDateModel', currentDateModel);
 
     /* @ngInject */
-    function currentDateModel($state, $rootScope)
+    function currentDateModel($rootScope)
     {
         var _currentDate = new Date();
 
@@ -26,7 +26,6 @@
 
         currentDateModel.nextDate = function()
         {
-            console.log("currentDateModel::nextDate");
             if(currentDateModel.currentDate == null)
             {
                 return;
@@ -38,7 +37,6 @@
         };
         currentDateModel.previousDate = function()
         {
-            console.log("currentDateModel::previousDate");
             if(currentDateModel.currentDate == null)
             {
                 return;
