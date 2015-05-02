@@ -3,16 +3,16 @@
 
     angular
         .module('main.macros.calorieCounter')
-        .directive('rfaCalorieCounter', rfaCalorieCounter);
+        .directive('jxlCalorieCounter', jxlCalorieCounter);
 
-    function rfaCalorieCounter()
+    function jxlCalorieCounter()
     {
         return {
             restrict: 'E',
             scope: {},
             transclude: false,
             templateUrl: 'main/macros/calorieCounter/calorieCounter.directive.html',
-            controller: 'rfaCalorieCounterController',
+            controller: 'jxlCalorieCounterController',
             controllerAs: 'vm'
         };
     }

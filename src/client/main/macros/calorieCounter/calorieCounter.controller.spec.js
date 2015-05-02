@@ -16,7 +16,7 @@ describe('calorieCounter controller', function()
       {
         scope = _$rootScope_.$new();
         macrosModelTesting = macrosModel;
-        controller = _$controller_('rfaCalorieCounterController', {
+        controller = _$controller_('jxlCalorieCounterController', {
           $scope: scope
         });
         _$rootScope_.$apply();

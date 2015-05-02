@@ -1,10 +1,10 @@
 (function () {
 
 angular.module("main.macros.foodList")
-	.controller("rfaFoodListController", rfaFoodListController);
+	.controller("jxlFoodListController", jxlFoodListController);
 
 	/* @ngInject */
-	function rfaFoodListController($rootScope, macrosModel, currentDateModel, $http, $scope, localStorageService)
+	function jxlFoodListController($rootScope, macrosModel, currentDateModel, $http, $scope, localStorageService)
 	{
 		var vm       = this;
 		vm.hasSearchResults = false;
@@ -27,13 +27,13 @@ angular.module("main.macros.foodList")
 
         $rootScope.$on('macrosChanged', function()
         {
-            console.log("rfaCalorieCounterController::macrosChanged event");
+            console.log("jxlCalorieCounterController::macrosChanged event");
             vm._updateValues();
         });
 
         $rootScope.$on('currentDateChanged', function()
         {
-        	console.log("rfaCalorieCounterController::currentDateChanged event");
+        	console.log("jxlCalorieCounterController::currentDateChanged event");
         	vm._updateValues();
         });
 

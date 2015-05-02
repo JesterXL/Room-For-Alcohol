@@ -26,7 +26,7 @@ describe('foodList controller', function()
         var APIURL = 'http://'+window.location.hostname+':2146/api/foods';
         $httpBackend.expectGET(APIURL);
         $httpBackend.whenGET(APIURL).respond(foodSmall);
-        controller = _$controller_('rfaFoodListController', {
+        controller = _$controller_('jxlFoodListController', {
           $scope: scope
         });
         _$rootScope_.$apply();

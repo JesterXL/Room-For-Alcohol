@@ -3,16 +3,16 @@
 
     angular
         .module('main.workout.workoutList')
-        .directive('rfaWorkoutList', rfaWorkoutList);
+        .directive('jxlWorkoutList', jxlWorkoutList);
 
-    function rfaWorkoutList()
+    function jxlWorkoutList()
     {
         return {
             restrict: 'E',
             scope: {},
             transclude: false,
             templateUrl: 'main/workout/workoutList/workoutList.directive.html',
-            controller: 'rfaWorkoutListController',
+            controller: 'jxlWorkoutListController',
             controllerAs: 'vm'
         };
     }

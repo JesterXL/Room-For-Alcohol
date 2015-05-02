@@ -17,13 +17,13 @@
 
         $rootScope.$on('macrosChanged', function()
         {
-            console.log("rfaCalorieCounterController::macrosChanged event");
+            console.log("jxlCalorieCounterController::macrosChanged event");
             vm._updateValues();
         });
 
         $rootScope.$on('currentDateChanged', function()
         {
-        	console.log("rfaCalorieCounterController::currentDateChanged event");
+        	console.log("jxlCalorieCounterController::currentDateChanged event");
         	vm._updateValues();
         });
 

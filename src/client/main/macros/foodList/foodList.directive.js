@@ -3,10 +3,10 @@
 
     angular
         .module('main.macros.foodList')
-        .directive('rfaFoodList', rfaFoodList);
+        .directive('jxlFoodList', jxlFoodList);
 
     /* @ngInject */
-    function rfaFoodList($timeout, $rootScope, currentDateModel, macrosModel)
+    function jxlFoodList($timeout, $rootScope, currentDateModel, macrosModel)
     {
 
         return {
@@ -14,7 +14,7 @@
             scope: {},
             transclude: false,
             templateUrl: 'main/macros/foodList/foodList.directive.html',
-            controller: 'rfaFoodListController',
+            controller: 'jxlFoodListController',
             controllerAs: 'vm'
         };
     }

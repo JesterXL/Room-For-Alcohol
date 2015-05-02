@@ -15,7 +15,7 @@ describe('macros model', function()
      inject(function(_$rootScope_, _$controller_)
       {
         scope = _$rootScope_.$new();
-        controller = _$controller_('rfaDateChooserController', {
+        controller = _$controller_('jxlDateChooserController', {
           $scope: scope
         });
         _$rootScope_.$apply();

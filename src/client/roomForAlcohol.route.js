@@ -15,11 +15,11 @@
             })
             .state('macros', {
                 url: '/macros',
-                template: '<rfa-macros></rfa-macros>'
+                template: '<jxl-macros></jxl-macros>'
             })
             .state('workout', {
                 url: '/workout',
-                template: '<rfa-workout></rfa-workout>'
+                template: '<jxl-workout></jxl-workout>'
             });
             
             // .state('shipsType', {

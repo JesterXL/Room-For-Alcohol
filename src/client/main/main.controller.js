@@ -1,10 +1,10 @@
 (function () {
 
 	angular.module("main")
-		.controller("rfaMainController", rfaMainController);
+		.controller("jxlMainController", jxlMainController);
 
 	/* @ngInject */
-    function rfaMainController($state, $rootScope, $location)
+    function jxlMainController($state, $rootScope, $location)
     {
         var vm = this;
         vm.macrosEnabled = false;

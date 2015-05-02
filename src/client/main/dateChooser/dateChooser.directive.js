@@ -3,16 +3,16 @@
 
     angular
         .module('main.dateChooser')
-        .directive('rfaDateChooser', rfaDateChooser);
+        .directive('jxlDateChooser', jxlDateChooser);
 
-    function rfaDateChooser()
+    function jxlDateChooser()
     {
         return {
             restrict: 'E',
             scope: {},
             transclude: false,
             templateUrl: 'main/dateChooser/dateChooser.directive.html',
-            controller: 'rfaDateChooserController',
+            controller: 'jxlDateChooserController',
             controllerAs: 'vm'
         };
     }

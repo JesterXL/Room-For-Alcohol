@@ -1,10 +1,10 @@
 (function () {
 
 	angular.module("main.workout")
-		.controller("rfaWorkoutController", rfaWorkoutController);
+		.controller("jxlWorkoutController", jxlWorkoutController);
 
 	/* @ngInject */
-    function rfaWorkoutController($scope, $http, macrosModel, localStorageService)
+    function jxlWorkoutController($scope, $http, macrosModel, localStorageService)
     {
     }
 })();

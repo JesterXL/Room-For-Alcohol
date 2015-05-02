@@ -1,10 +1,10 @@
 (function () {
 
 	angular.module("main.macros.calorieCounter")
-		.controller("rfaCalorieCounterController", rfaCalorieCounterController);
+		.controller("jxlCalorieCounterController", jxlCalorieCounterController);
 
 	/* @ngInject */
-    function rfaCalorieCounterController($rootScope, macrosModel, currentDateModel)
+    function jxlCalorieCounterController($rootScope, macrosModel, currentDateModel)
     {
         var vm       = this;
 		vm.macroTarget = null;
@@ -21,14 +21,14 @@
 
         $rootScope.$on('macrosChanged', function()
         {
-            console.log("rfaCalorieCounterController::macrosChanged event");
+            console.log("jxlCalorieCounterController::macrosChanged event");
             vm._updateValues();
         });
 
         // date can change quickly, debounce it
         $rootScope.$on('currentDateChanged', function()
         {
-        	console.log("rfaCalorieCounterController::currentDateChanged event");
+        	console.log("jxlCalorieCounterController::currentDateChanged event");
         	vm._updateValues();
         });
 

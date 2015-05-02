@@ -16,7 +16,7 @@ describe('main controller', function()
       {
         scope = _$rootScope_.$new();
         state = _$state_;
-        controller = _$controller_('rfaMainController', {
+        controller = _$controller_('jxlMainController', {
           $scope: scope
         });
         _$rootScope_.$apply();

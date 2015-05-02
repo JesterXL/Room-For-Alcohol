@@ -3,16 +3,16 @@
 
     angular
         .module('main')
-        .directive('rfaMain', rfaMain);
+        .directive('jxlMain', jxlMain);
 
-    function rfaMain()
+    function jxlMain()
     {
         return {
             restrict: 'E',
             scope: {},
             transclude: true,
             templateUrl: 'main/main.directive.html',
-            controller: 'rfaMainController',
+            controller: 'jxlMainController',
             controllerAs: 'vm'
         };
     }
