@@ -12,7 +12,11 @@
         function link(scope, element, attrs)
         {
             console.log("macroTargets::link");
+            // console.log("scope:", scope);
+            // console.log("element:", element);
+            // console.log("attrs:", attrs);
             // Get the context of the canvas element we want to select
+            var obj = document.getElementById("currentChart");
             var currentChart = document.getElementById("currentChart").getContext("2d");
             var targetChart = document.getElementById("targetChart").getContext("2d");
             var data = [

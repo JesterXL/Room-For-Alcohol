@@ -2,7 +2,7 @@
 (function() {
     'use strict';
     describe('macros directive:', function() {
-        var scope, $httpBackend, $templateCache;
+        var scope;
 
         beforeEach(function() {
             module('main', 'main.macros.macroTargets',
@@ -55,18 +55,12 @@
               foods: []
             }];
 
-            inject(function(_$httpBackend_, macrosModel, _$templateCache_)
+            inject(function(macrosModel)
             {
-                $templateCache = _$templateCache_;
-                // var template = $templateCache.get('main/macros/macroTargets/macroTargets.directive.html');
-                // console.log("template:", template);
-                // $templateCache.put('main/macros/macroTargets/macroTargets.directive.html', template);
                 macrosModel.macros = dailyMacros;
             });
 
         });
-
-        
 
         it('is a directive that exists where compile works', function() {
             inject(function($rootScope, $compile, $httpBackend)
@@ -74,10 +68,10 @@
                 var newScope = $rootScope.$new();
                 var element = '<jxl-macro-targets></jxl-macro-targets>';
                 element = $compile(element)(newScope);
+                angular.element(document.body).append(element);
                 newScope.$digest();
-                expect(element.html()).toContain("lidless, wreathed in flame, 2 times");
+                expect(element.find('h2').length).to.equal(1);
             });
-
         });
 
     });
