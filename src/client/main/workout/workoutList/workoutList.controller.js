@@ -1,10 +1,10 @@
 (function () {
 
 	angular.module("main.workout.workoutList")
-		.controller("rfaWorkoutListController", rfaWorkoutListController);
+		.controller("jxlWorkoutListController", jxlWorkoutListController);
 
 	/* @ngInject */
-    function rfaWorkoutListController($http)
+    function jxlWorkoutListController($http)
     {
         var vm = this;
         vm.workouts = null;
