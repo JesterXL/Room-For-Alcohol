@@ -13,3 +13,6 @@
 /.coverdata/
 
 /.coverrun
+
+/src/api/foodSmall.js
+/src/api/foods.json
