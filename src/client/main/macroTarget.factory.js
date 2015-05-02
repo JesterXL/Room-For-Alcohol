@@ -5,7 +5,7 @@
         .module('main.macrosModel')
         .factory('macroTarget', macroTargetFactory);
     
-    function macroTargetFactory()
+    function macroTargetFactory($rootScope)
     {
         function macroTarget()
         {
@@ -146,7 +146,7 @@
                     macroTarget.proteinCurrent = (totalProtein * 4) / totalCalories;
                     macroTarget.carbsCurrent   = (totalCarbs * 4) / totalCalories;
                     macroTarget.fatCurrent     = (totalFat * 9) / totalCalories;
-                    // $rootScope.$broadcast('macrosChanged');
+                    $rootScope.$broadcast('macrosChanged');
                 }
             };
             target._updateRemaining(target);

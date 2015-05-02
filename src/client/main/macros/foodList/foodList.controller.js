@@ -80,7 +80,7 @@ angular.module("main.macros.foodList")
 			});
 		}
 
-		vm.onFoodSearch = _.debounce(searchFood, 300, {leading: true});
+		vm.onFoodSearch = _.debounce(searchFood, 300, {leading: false});
 
 		vm.onDeleteFood = function(food)
 		{
