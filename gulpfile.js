@@ -78,7 +78,8 @@ gulp.task('testWhileICode', function(done)
 {
     karma.start({
         configFile: __dirname + '/' + CONFIG.karma.configFile,
-        singleRun: false
+        singleRun: false,
+        reporters: ['progress']
       }, function()
       {
         done();

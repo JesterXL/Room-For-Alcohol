@@ -6,7 +6,8 @@
             'ui.router',
             'main.dateChooser',
             'main.macros',
-            'main.workout'
+            'main.workout',
+            'LocalStorageModule'
             ]);
         
 })();

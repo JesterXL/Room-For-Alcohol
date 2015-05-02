@@ -4,7 +4,8 @@
     angular
         .module('main.macros.foodList', [
         		'main.macrosModel',
-        		'main.currentDateModel'
+        		'main.currentDateModel',
+        		'LocalStorageModule'
             ]);
 
 })();
