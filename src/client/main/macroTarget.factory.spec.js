@@ -357,6 +357,27 @@ describe('macro target', function()
       expect(service.food).to.equal(58);
     });
 
+    it('foods is empty by default', function()
+    {
+      expect(service.foods).to.be.emtpy;
+    });
+
+    it('if we call clearFoods, no length changes', function()
+    {
+      expect(service.foods).to.be.emtpy;
+      service.clearFoods();
+      expect(service.foods).to.be.emtpy;
+    });
+
+    it('if we add food, then clear it, foods is empty', function()
+    {
+      expect(service.foods).to.be.emtpy;
+      service.addFood(mockFood);
+      expect(service.foods).to.not.be.emtpy;
+      service.clearFoods();
+      expect(service.foods).to.be.empty;
+    });
+
   });
 
 });

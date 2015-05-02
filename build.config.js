@@ -61,13 +61,15 @@ var config = {
 
   karma: {
     configFile: 'karma.config.js',
-    moduleName: 'room-for-alcohol',
+    moduleName: 'roomForAlcohol',
     files: ['src/client/*.module.js',
             'src/client/*.js',
             'src/client/**/*.module.js',
             'src/client/**/*.js',
             'src/client/*.spec.js', 
-            'src/client/**/*.spec.js']
+            'src/client/**/*.spec.js',
+            'src/client/*.directive.html',
+            'src/client/**/*.directive.html']
   },
 
   staticServer: {

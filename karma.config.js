@@ -73,7 +73,7 @@ module.exports = function(config) {
 
         ngHtml2JsPreprocessor: {
             moduleName: BUILD_CONFIG.client.moduleName,
-            stripPrefix: BUILD_CONFIG.client.baseDirectory
+            stripPrefix: 'src/client/'
         }
     });
 };

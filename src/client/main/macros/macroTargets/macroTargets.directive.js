@@ -3,10 +3,10 @@
 
     angular
         .module('main.macros.macroTargets')
-        .directive('rfaMacroTargets', rfaMacroTargets);
+        .directive('jxlMacroTargets', jxlMacroTargets);
 
     /* @ngInject */
-    function rfaMacroTargets($timeout, $rootScope, currentDateModel, macrosModel)
+    function jxlMacroTargets($timeout, $rootScope, currentDateModel, macrosModel)
     {
         /* @ngInject */
         function link(scope, element, attrs)
@@ -74,6 +74,7 @@
                 var carbs       = 1;
                 var fat         = 2;
                 var macrosForToday = macrosModel.getMacroTargetForDate(currentDateModel.currentDate);
+                console.log("macrosForToday:", macrosForToday);
                 if(macrosForToday)
                 {
                     console.log("macrosForToday.proteinCurrent:", macrosForToday.proteinCurrent);
@@ -137,7 +138,7 @@
             scope: {},
             transclude: false,
             templateUrl: 'main/macros/macroTargets/macroTargets.directive.html',
-            controller: 'rfaMacroTargetsController',
+            controller: 'jxlMacroTargetsController',
             controllerAs: 'vm',
             link: link
         };

@@ -1,7 +1,7 @@
 /* jshint -W117, -W030 */
 'use strict';
 
-describe('macros model', function()
+describe('currentDateModel', function()
 {
   var model;
 
@@ -31,7 +31,8 @@ describe('macros model', function()
   it('currentDate should default to today', function()
   {
     // expect(model.currentDate).to.equalDate(new Date());
-    // TODO: get the bloody chai-datetime working...
+    // TODO/FIXME: get the bloody chai-datetime working...
+    // This randomly fails because datemath, heh
     expect(model.currentDate.getTime()).to.equal(new Date().getTime());
   });
 

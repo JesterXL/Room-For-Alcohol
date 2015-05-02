@@ -91,6 +91,8 @@
 
                 addFood: function(food)
                 {
+                    // console.log("*** addFood");
+                    // throw new Error("where");
                     target.foods.push(food);
                     target._updateTotalFoodCaloriesAndMacros(target);
                 },
@@ -108,6 +110,12 @@
                         newAmount = 0;
                     }
                     food.amount = newAmount;
+                    target._updateTotalFoodCaloriesAndMacros(target);
+                },
+
+                clearFoods: function()
+                {
+                    target.foods = [];
                     target._updateTotalFoodCaloriesAndMacros(target);
                 },
 

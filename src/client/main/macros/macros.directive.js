@@ -3,16 +3,16 @@
 
     angular
         .module('main.macros')
-        .directive('rfaMacros', rfaMacros);
+        .directive('jxlMacros', jxlMacros);
 
-    function rfaMacros()
+    function jxlMacros()
     {
         return {
             restrict: 'E',
             scope: {},
             transclude: false,
             templateUrl: 'main/macros/macros.directive.html',
-            controller: 'rfaMacrosController',
+            controller: 'jxlMacrosController',
             controllerAs: 'vm'
         };
     }

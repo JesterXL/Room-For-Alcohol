@@ -1,35 +1,33 @@
 (function () {
 
 	angular.module("main.macros.macroTargets")
-		.controller("rfaMacroTargetsController", rfaMacroTargetsController);
+		.controller("jxlMacroTargetsController", jxlMacroTargetsController);
 
 	/* @ngInject */
-    function rfaMacroTargetsController($rootScope, macrosModel, currentDateModel)
+    function jxlMacroTargetsController($rootScope, macrosModel, currentDateModel)
     {
         var vm       = this;
-        vm.macrosModel = macrosModel;
-        vm.currentDateModel = currentDateModel;
 
         vm.macroTarget = null;
 
-		function updateValues()
+		vm._updateValues = function()
 		{
 			vm.macroTarget = macrosModel.getMacroTargetForDate(currentDateModel.currentDate);
-		}
+		};
 
         $rootScope.$on('macrosChanged', function()
         {
             console.log("rfaCalorieCounterController::macrosChanged event");
-            updateValues();
+            vm._updateValues();
         });
 
         $rootScope.$on('currentDateChanged', function()
         {
         	console.log("rfaCalorieCounterController::currentDateChanged event");
-        	updateValues();
+        	vm._updateValues();
         });
 
-        updateValues();
+        vm._updateValues();
     }
 })();
 

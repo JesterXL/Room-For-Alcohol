@@ -3,8 +3,36 @@
 
 describe('foodList controller', function()
 {
-  var controller, scope, macrosModelTesting, currentDateModelTesting, $httpBackend;
-  var dailyMacros = [{
+  var controller, scope, macrosModelTesting, currentDateModelTesting, $httpBackend, $q, $timeout;
+  var dailyMacros;
+  var foodSmall; // she's actually big, so at the very bottom
+
+  beforeEach(function()
+  {
+    module('main.macros.foodList');
+  });
+
+  beforeEach(function()
+  {
+     inject(function(_$rootScope_, _$controller_, macrosModel, currentDateModel, _$httpBackend_, _$q_, _$timeout_)
+      {
+        scope = _$rootScope_.$new();
+        macrosModelTesting = macrosModel;
+        currentDateModelTesting = currentDateModel;
+        macrosModelTesting.macros = dailyMacros;
+        $timeout = _$timeout_;
+        $q = _$q_;
+        $httpBackend = _$httpBackend_;
+        var APIURL = 'http://'+window.location.hostname+':2146/api/foods';
+        $httpBackend.expectGET(APIURL);
+        $httpBackend.whenGET(APIURL).respond(foodSmall);
+        controller = _$controller_('rfaFoodListController', {
+          $scope: scope
+        });
+        _$rootScope_.$apply();
+      });
+
+     dailyMacros = [{
         days: [0, 3, 5],
         protein: 0.45,
         carbs: 0.08,
@@ -34,47 +62,11 @@ describe('foodList controller', function()
         carbsCurrent: 0,
         foods: []
       }];
-  var foodSmall; // she's actually big, so at the very bottom
-
-  beforeEach(function()
-  {
-    module('main.macros.foodList');
-  });
-
-  beforeEach(function()
-  {
-     inject(function(_$rootScope_, _$controller_, macrosModel, currentDateModel, _$httpBackend_)
-      {
-        scope = _$rootScope_.$new();
-        macrosModelTesting = macrosModel;
-        currentDateModelTesting = currentDateModel;
-        macrosModelTesting.macros = dailyMacros;
-        $httpBackend = _$httpBackend_;
-        var APIURL = 'http://'+window.location.hostname+':2146/api/foods';
-        $httpBackend.expectGET(APIURL);
-        $httpBackend.whenGET(APIURL).respond(foodSmall);
-        controller = _$controller_('rfaFoodListController', {
-          $scope: scope
-        });
-        _$rootScope_.$apply();
-      });
-  });
-
-
-  afterEach(function()
-  {
-   // $httpBackend.verifyNoOutstandingExpectation();
-   // $httpBackend.verifyNoOutstandingRequest();
   });
 
   it('should be defined', function()
   {
     expect(controller).to.be.exist;
-  });
-
-  it('macrosModel exists', function()
-  {
-    expect(controller.macrosModel).to.exist;
   });
 
   it('starts with no searchResults', function()
@@ -140,7 +132,6 @@ describe('foodList controller', function()
 
   describe('food APIs', function()
   {
-
     it('foodSmall to work', function()
     {
       expect(foodSmall).to.exist;
@@ -156,24 +147,90 @@ describe('foodList controller', function()
       expect(controller.macroTarget.foods).to.be.empty;
       controller.onChooseFood(foodSmall[0]);
       expect(controller.macroTarget.foods).to.not.be.empty;
-      controller.macroTarget.foods = [];
     });
 
     it('removing food ensures array is empty', function()
     {
-      controller.macroTarget.foods = [];
       expect(controller.macroTarget.foods).to.be.empty;
       var food = foodSmall[0];
       controller.onChooseFood(food);
       expect(controller.macroTarget.foods).to.not.be.empty;
       controller.onDeleteFood(food);
       expect(controller.macroTarget.foods).to.be.empty;
-      controller.macroTarget.foods = [];
     });
 
+    it('changing food amount does not affect array size', function()
+    {
+      expect(controller.macroTarget.foods).to.be.empty;
+      var food = foodSmall[0];
+      controller.onChooseFood(food);
+      expect(controller.macroTarget.foods).to.not.be.below(2);
+      controller.onChangeFoodAmount(food);
+      expect(controller.macroTarget.foods).to.not.be.below(2);
+    });
+
+    afterEach(function()
+    {
+      controller.foodSearch = '';
+    });
+
+    it("searching for a food works", function()
+    {
+      var len = foodSmall.length;
+      for(var i=0; i<len; i++)
+      {
+        var oldFood = foodSmall[i];
+        var newFood = {
+            name: oldFood.description,
+            amount: 1,
+            portions: oldFood.portions,
+            protein: _.find(oldFood.nutrients, function(nutrient)
+            {
+                return nutrient.description == "Protein";
+            }).value,
+
+            carbs: _.find(oldFood.nutrients, function(nutrient)
+            {
+                return nutrient.description == "Carbohydrate, by difference";
+            }).value,
+
+            fat: _.find(oldFood.nutrients, function(nutrient)
+            {
+                return nutrient.description == "Total lipid (fat)";
+            }).value
+        };
+
+        if(newFood.name.length > 42)
+        {
+            newFood.shortName = oldFood.description.substr(0, 42) + "...";
+        }
+        else
+        {
+            newFood.shortName = newFood.name;
+        }
+        newFood.calories = (newFood.protein * 4) + (newFood.carbs * 4) + (newFood.fat * 9);
+        foodSmall[i] = newFood;
+      }
+
+      $httpBackend.flush();
+      expect(controller.foodSearchMatches).to.not.exist;
+      expect(controller.hasSearchResults).to.be.false;
+      controller.foodSearch = "c";
+      controller.onFoodSearch();
+      expect(controller.foodSearchMatches.length).to.be.above(0);
+      expect(controller.hasSearchResults).to.be.true;
   });
 
+});
   
+
+
+
+
+
+
+
+
   foodSmall = [
   {
     "id": 1008,

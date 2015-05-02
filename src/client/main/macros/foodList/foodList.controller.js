@@ -7,7 +7,6 @@ angular.module("main.macros.foodList")
 	function rfaFoodListController($rootScope, macrosModel, currentDateModel, $http, $scope, localStorageService)
 	{
 		var vm       = this;
-		vm.macrosModel = macrosModel;
 		vm.hasSearchResults = false;
 		vm.foodSearch = "";
 		vm.foodList = null;
@@ -81,7 +80,7 @@ angular.module("main.macros.foodList")
 			});
 		}
 
-		vm.onFoodSearch = _.debounce(searchFood, 300);
+		vm.onFoodSearch = _.debounce(searchFood, 300, {leading: true});
 
 		vm.onDeleteFood = function(food)
 		{
@@ -101,6 +100,7 @@ angular.module("main.macros.foodList")
 
 		function init()
 		{
+			// TODO/FIXME: need a global cache manager
 			var cachedFoodList = localStorageService.get('foodList');
 			var cachedFoodList = null;
 			if(cachedFoodList == null)
@@ -108,7 +108,7 @@ angular.module("main.macros.foodList")
 				$http.get('http://'+window.location.hostname+':2146/api/foods')
 				.then(function(response)
 				{
-					console.log("api/foods::response:", response);
+					// console.log("api/foods::response:", response);
 					localStorageService.set('foodList', response.data);
 					vm.foodList = response.data;
 				});
