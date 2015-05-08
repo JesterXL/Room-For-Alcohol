@@ -20,5 +20,20 @@ describe('Main app module:', function() {
            });
            expect(scope).to.be.ok;
         });
+
+        it('strings are the same but different vars', function()
+        {
+          var uuid1 = 'a';
+          var uuid2 = 'a';
+          expect(uuid1).to.be.equal(uuid2);
+        });
+
+        it('strings are different and different vars', function()
+        {
+          var uuid1 = 'a';
+          var uuid2 = 'b';
+          expect(uuid1).to.not.be.equal(uuid2);
+        });
+
     });
 });

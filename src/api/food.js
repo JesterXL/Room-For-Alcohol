@@ -3,7 +3,7 @@ console.log('Loading restify server...');
 var _       = require('lodash');
 var Promise = require("bluebird");
 var restify = require('restify');
-var foodCollection = require('./foodCollection');
+// var foodCollection = require('./foodCollection');
 var api     = restify.createServer({name: 'room-for-alcohol-api'});
 
 api.listen(2146, function () {

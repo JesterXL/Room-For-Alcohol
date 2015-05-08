@@ -299,6 +299,11 @@ describe('Food API', function()
       });
   });
 
+  it('can add document collections?', function()
+  {
+    var collection = db.collection.insert({name: 'food test collection'});
+  });
+
 });
 
 
