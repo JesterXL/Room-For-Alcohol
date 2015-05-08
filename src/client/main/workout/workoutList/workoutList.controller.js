@@ -4,24 +4,41 @@
 		.controller("jxlWorkoutListController", jxlWorkoutListController);
 
 	/* @ngInject */
-    function jxlWorkoutListController($http)
+    function jxlWorkoutListController($rootScope, workoutModel, currentDateModel)
     {
         var vm = this;
-        vm.workouts = null;
-        vm.todaysExercises = null;
+        vm.hasWorkoutForToday = false;
+        vm.todaysWorkout = null;
 
-        function init()
+        vm._updateWorkout = function()
         {
-        	$http.get('http://'+window.location.hostname+':2146/api/workouts')
-        		.then(function(response)
-        		{
-        			console.log("data:", response.data);
-        			vm.workouts = response.data;
-        			vm.todaysExercises = vm.workouts[0].exercises;
-        			console.log("vm.todaysExercises:", vm.todaysExercises);
-        		});
-        }
+        	vm.todaysWorkout = workoutModel.getWorkoutForDate(currentDateModel.currentDate);
+        	// console.log("jxlWorkoutListController::_updateWorkout, vm.todaysWorkout:", vm.todaysWorkout);
+        	if(typeof vm.todaysWorkout === 'undefined' || vm.todaysWorkout == null)
+        	{
+        		vm.hasWorkoutForToday = false;
+        	}
+        	else
+        	{
+                if(vm.todaysWorkout.exercises.length > 0)
+                {
+        		  vm.hasWorkoutForToday = true;
+                }
+                else
+                {
+                    vm.hasWorkoutForToday = false;
+                }
+        	}
+        };
 
-        init();
+        $rootScope.$on('workoutsChanged', function()
+        {
+        	vm._updateWorkout();
+        });
+
+        $rootScope.$on('currentDateChanged', function()
+        {
+        	vm._updateWorkout();
+        });
     }
 })();

@@ -1,3 +1,7 @@
-<ul>
-	<li ng-repeat="exercise in vm.todaysExercises">{{exercise.name}}</li>
+<ul ng-show="vm.hasWorkoutForToday">
+	<li ng-repeat="exercise in vm.todaysWorkout.exercises">{{exercise.name}}</li>
 </ul>
+<div ng-hide="vm.hasWorkoutForToday">
+	<h1>Rest</h1>
+	<p>It's part of the program!</p>
+</div>

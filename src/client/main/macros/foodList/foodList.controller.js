@@ -39,6 +39,9 @@ angular.module("main.macros.foodList")
 
         vm._updateValues();
 
+
+        var FOOD_RESULTS_LENGTH = 30;
+
 		function searchFood()
 		{
 			$scope.$apply(function()
@@ -75,7 +78,7 @@ angular.module("main.macros.foodList")
 						return 0;
 					}
 				});
-				vm.foodSearchMatches = matches.slice(0, (Math.min(6, matches.length)));
+				vm.foodSearchMatches = matches.slice(0, (Math.min(FOOD_RESULTS_LENGTH, matches.length)));
 				vm.hasSearchResults = vm.foodSearchMatches.length > 0;
 			});
 		}
