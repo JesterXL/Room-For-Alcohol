@@ -1,3 +1,4 @@
+/* global _ */
 (function() {
     'use strict';
 
@@ -62,13 +63,13 @@
 
                 init: function(goal, food, exercise)
                 {
-                    if(typeof(goal) == "number")
+                    if(typeof(goal) === "number")
                     {
                         _goal     = goal;
                         _food     = food;
                         _exercise = exercise;
                     }
-                    else if(typeof(goal) == "object")
+                    else if(typeof(goal) === "object")
                     {
                         var dto               = goal;
                         target.remaining      = dto.remaining;

@@ -1,3 +1,4 @@
+/* global moment */
 (function() {
     'use strict';
 
@@ -11,7 +12,7 @@
     {
         var _currentDate = new Date();
 
-        var currentDateModel = {
+        var model = {
             get currentDate()
             {
                 return _currentDate;
@@ -24,30 +25,30 @@
             }
         };
 
-        currentDateModel.nextDate = function()
+        model.nextDate = function()
         {
-            if(currentDateModel.currentDate == null)
+            if(model.currentDate == null)
             {
                 return;
             }
-            var ourDate = currentDateModel.currentDate;
+            var ourDate = model.currentDate;
             var newDate = new Date(ourDate.valueOf());
             newDate.setDate(ourDate.getDate() + 1);
-            currentDateModel.currentDate = newDate;
+            model.currentDate = newDate;
         };
-        currentDateModel.previousDate = function()
+        model.previousDate = function()
         {
-            if(currentDateModel.currentDate == null)
+            if(model.currentDate == null)
             {
                 return;
             }
-            var ourDate = currentDateModel.currentDate;
+            var ourDate = model.currentDate;
             var newDate = new Date(ourDate.valueOf());
             newDate.setDate(ourDate.getDate() - 1);
-            currentDateModel.currentDate = newDate;
-            currentDateModel.currentDateString = moment(currentDateModel.currentDate).format('dddd');
+            model.currentDate = newDate;
+            model.currentDateString = moment(model.currentDate).format('dddd');
         };
-        return currentDateModel;
+        return model;
     }
 
 })();

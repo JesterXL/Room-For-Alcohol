@@ -37,6 +37,20 @@ gulp.task('hello', function()
 // **********************************************************************
 // **********************************************************************
 
+// HACK/FIXME/TODO: jscs isn't piping correctly in analyze, fix.
+gulp.task('jscs', function()
+{
+    return gulp.src(CONFIG.client.sourceFiles)
+        .pipe(jscs());
+});
+
+gulp.task('jscsfix', function()
+{
+    return gulp.src(CONFIG.client.sourceFiles)
+        .pipe(jscs({fix: true}))
+        .pipe(gulp.dest(CONFIG.client.baseDirectory));
+});
+
 gulp.task('analyze', function() {
   return gulp.src(CONFIG.client.sourceFiles)
     .pipe(jshint())
@@ -46,11 +60,11 @@ gulp.task('analyze', function() {
     {
     	console.warn('jshint failed.');
     })
-    .pipe(jscs())
-    .on('error', function(e)
-    {
-    	console.warn('jscs failed');
-    })
+    // .pipe(jscs())
+    // .on('error', function(e)
+    // {
+    // 	console.warn('jscs failed');
+    // })
     .pipe(complexity({
         	cyclomatic: [3, 7, 12],
             halstead: [8, 13, 20],

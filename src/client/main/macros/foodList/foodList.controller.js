@@ -1,3 +1,4 @@
+/* globals _ */
 (function () {
 
 angular.module("main.macros.foodList")
@@ -46,7 +47,7 @@ angular.module("main.macros.foodList")
 		{
 			$scope.$apply(function()
 			{
-				if(vm.foodList == null || vm.foodSearch == "" || vm.foodSearch == null)
+				if(vm.foodList === null || vm.foodSearch === "" || vm.foodSearch === null)
 				{
 					vm.foodSearchMatches = null;
 					vm.hasSearchResults = false;
@@ -83,7 +84,7 @@ angular.module("main.macros.foodList")
 			});
 		}
 
-		vm.onFoodSearch = _.debounce(searchFood, 300, {leading: false});
+		vm.onFoodSearch = _.debounce(searchFood, 300, {leading: true});
 
 		vm.onDeleteFood = function(food)
 		{
@@ -104,7 +105,7 @@ angular.module("main.macros.foodList")
 		function init()
 		{
 			// TODO/FIXME: need a global cache manager
-			var cachedFoodList = localStorageService.get('foodList');
+			// var cachedFoodList = localStorageService.get('foodList');
 			var cachedFoodList = null;
 			if(cachedFoodList == null)
 			{

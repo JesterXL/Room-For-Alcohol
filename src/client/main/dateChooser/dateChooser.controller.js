@@ -1,3 +1,4 @@
+/* global moment */
 (function () {
 
 	angular.module("main.dateChooser")
