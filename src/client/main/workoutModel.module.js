@@ -1,3 +1,4 @@
+/* global _ */
 (function() {
     'use strict';
 
@@ -43,9 +44,9 @@
                 return _workouts;
             },
 
-            set workouts(workouts)
+            set workouts(newWorkouts)
             {
-                _workouts    = workouts;
+                _workouts    = newWorkouts;
                 $rootScope.$broadcast('workoutsChanged');
             },
 
