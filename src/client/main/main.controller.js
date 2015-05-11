@@ -14,14 +14,14 @@
 
         vm.toggleState = function(toState)
         {
-        	if(toState == 'macros')
+        	if(toState === 'macros')
         	{
         		vm.macrosEnabled = true;
         		vm.macrosTab = 'tab';
         		vm.workoutEnabled = false;
         		vm.workoutTab = '';
         	}
-        	else if(toState == 'workout')
+        	else if(toState === 'workout')
         	{
         		vm.macrosEnabled = false;
         		vm.macrosTab = '';
