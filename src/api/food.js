@@ -19,6 +19,52 @@ api.pre(restify.fullResponse());
 
 api.use(restify.bodyParser());
 
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
+
+api.use(passport.initialize());
+api.use(passport.session());
+
+passport.serializeUser(function(user, done) {
+  done(null, user);
+});
+
+passport.deserializeUser(function(user, done) {
+  done(null, user);
+});
+
+passport.use(new LocalStrategy(
+  function(username, password, done)
+  {
+    console.log("LocalStrategy, username: " + username + ", password: " + password);
+    if(username === 'uno' && password === 'dos')
+    {
+        return done(null, {name: 'Jesse', username: 'uno', password: 'dos'});
+    }
+    else
+    {
+        return done(null, false, { message: 'Incorrect password.' });
+    }
+  }
+));
+
+api.post('/api/login', function(req, res, next) {
+    console.log("api::login");
+  passport.authenticate('local', function(err, user, info) {
+    console.log("passport::authenticate");
+    console.log("err:", err);
+    console.log("user:", user);
+    if (err) { return res.send(401, {response: false}); }
+    if (!user) { return res.send(401, {response: false}); }
+    req.logIn(user, function(err)
+    {
+        console.log("req.logIn, err:", err);
+      if (err) { return next(err); }
+      return res.send(200, {response: true});
+    });
+  })(req, res, next);
+});
+
 api.get('/ping', function (req, res, next) {
     console.log("ping called");
     res.send(200, {response: true});
@@ -176,6 +222,11 @@ api.get('/api/foods', function(req, res, next)
     res.send(200, newFoods);
 });
 
+api.get('/api/random', function(req, res, next)
+{
+    var random = new Date().valueOf() * (Math.random() * 999);
+    res.send(200, random);
+});
 
 
 

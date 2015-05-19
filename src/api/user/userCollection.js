@@ -2,7 +2,7 @@ var Promise = require('bluebird');
 
 var _db = null;
 
-var foodsCollection = {
+var userCollection = {
 
 	get db()
 	{
@@ -14,15 +14,42 @@ var foodsCollection = {
 		_db = newDB;
 	},
 
-	insertFood: function(food)
+	createUser: function(email, username, password)
+	{
+		return new Promise(function(resolve, reject)
+		{
+			userCollection.findUser({email: email})
+			.then(function(foundUsers)
+			{
+				if(foundUsers.length > 0)
+				{
+					reject(new Error('Email address already exists.'));
+				}
+				else
+				{
+					return userCollection.insertUser({email: email, username: username, password: password});
+				}
+			})
+			.then(function(result)
+			{
+				resolve(result);
+			})
+			.catch(function(err)
+			{
+				reject(err);
+			});
+		});
+	},
+
+	insertUser: function(user)
 	{
 		return new Promise(function(resolve, reject)
 		{
 			try
 			{
-				var collection = _db.collection("food");
-				food._dateCreated = new Date();
-				collection.insert(food, function(error, result)
+				var collection = _db.collection("user");
+				user._dateCreated = new Date();
+				collection.insert(user, function(error, result)
 				{
 					if(error)
 					{
@@ -36,18 +63,17 @@ var foodsCollection = {
 			}
 			catch(err)
 			{
-				console.log("error:", err);
 				reject(err);
 			}
 		});
 	},
 
-	updateFood: function(food, newFood)
+	updateUser: function(user, newUser)
 	{
 		return new Promise(function(resolve, reject)
 		{
-			var collection = _db.collection("food");
-			collection.update(food, newFood, function(error, result)
+			var collection = _db.collection("user");
+			collection.update(user, newUser, function(error, result)
 			{
 				if(error)
 				{
@@ -61,12 +87,12 @@ var foodsCollection = {
 		}); 
 	},
 
-	removeFood: function(food)
+	removeUser: function(user)
 	{
 		return new Promise(function(resolve, reject)
 		{
-			var collection = _db.collection("food");
-			collection.remove(food, function(error, result)
+			var collection = _db.collection("user");
+			collection.remove(user, function(error, result)
 			{
 				if(error)
 				{
@@ -84,7 +110,7 @@ var foodsCollection = {
 	{
 		return new Promise(function(resolve, reject)
 		{
-			var collection = _db.collection("food");
+			var collection = _db.collection("user");
 			collection.remove({}, function(error, result)
 			{
 				if(error)
@@ -99,12 +125,12 @@ var foodsCollection = {
 		});
 	},
 
-	findFood: function(food)
+	findUser: function(user)
 	{
 		return new Promise(function(resolve, reject)
 		{
-			var collection = _db.collection("food");
-			collection.find(food).toArray(function(error, result)
+			var collection = _db.collection("user");
+			collection.find(user).toArray(function(error, result)
 			{
 				if(error)
 				{
@@ -118,11 +144,11 @@ var foodsCollection = {
 		});
 	},
 
-	getAllFoods: function()
+	getAllUsers: function()
 	{
 		return new Promise(function(resolve, reject)
 		{
-			var collection = _db.collection("food");
+			var collection = _db.collection("user");
 			collection.find({}).toArray(function(error, result)
 			{
 				if(error)
@@ -138,4 +164,4 @@ var foodsCollection = {
 	}
 };
 
-module.exports = foodsCollection;
+module.exports = userCollection;

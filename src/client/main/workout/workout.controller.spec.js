@@ -93,6 +93,12 @@ describe('Workout', function()
             expect(controller).to.be.defined;
         });
 
+        it('Avinash should be a pimp', function()
+        {
+            var Avinash = true;
+            Avinash.should.be.true;
+        });
+
         it('workouts are null by default', function()
         {
             expect(controller.workouts).to.not.exist;

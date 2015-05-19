@@ -35,7 +35,15 @@ module.exports = function(config) {
         },
         exclude: [],
         port: 8180,
-        browsers: ['PhantomJS'],
+        browsers: ['Chrome', 'Safari', 'Firefox'],
+        customLaunchers: {
+            Chrome1: {
+                base: "Chrome"
+            },
+            Chrome2: {
+                base: "Chrome"
+            }
+        },
         singleRun: false,
         continous: true,
         colors: true,
@@ -50,6 +58,8 @@ module.exports = function(config) {
             'karma-mocha',
             'karma-phantomjs-launcher',
             'karma-chrome-launcher',
+            'karma-firefox-launcher',
+            'karma-safari-launcher',
             'karma-junit-reporter',
             'karma-sinon',
             'karma-coverage',

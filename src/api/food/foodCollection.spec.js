@@ -1,36 +1,33 @@
 var should = require('chai').should();
 var expect = require('chai').expect;
 var foodCollection = require('./foodCollection');
+var Client = require('../mongo/client');
+var Promise = require('bluebird');
 
 describe('Food API', function()
 {
 
-  var MongoClient, db;
+  var client, db;
 
   before(function(done)
   {
-    MongoClient = require('mongodb').MongoClient;
-    var url = 'mongodb://localhost:27017/mydb';
-    // Use connect method to connect to the Server 
-    MongoClient.connect(url, function(err, dbInstance)
+    client = new Client();
+    client.connect()
+    .then(function()
     {
-      console.log("MongoClient connect");
-      if(err)
-      {
-        console.error("err:", err);
-        done();
-        return;
-      }
       console.log("Connected correctly to server");
-      db = dbInstance;
+      db = client.db;
       foodCollection.db = db;
-      foodCollection.removeAll()
-      .then(function()
-      {
-        done();
-      });
-      
-    });
+      return foodCollection.removeAll();
+    })
+    .then(function()
+    {
+      done();
+    })
+    .error(function(err)
+    {
+      done(err);
+    })
   });
 
   after(function(done)
@@ -38,8 +35,17 @@ describe('Food API', function()
     foodCollection.removeAll()
     .then(function()
     {
-      db.close();
+      return client.close();
+    })
+    .then(function()
+    {
+      client = null;
       done();
+    })
+    .error(function(err)
+    {
+      client = null;
+      done(err);
     });
   });
 
@@ -49,6 +55,10 @@ describe('Food API', function()
     .then(function()
     {
       done();
+    })
+    .error(function(err)
+    {
+      done(err);
     });
   });
 
@@ -297,11 +307,6 @@ describe('Food API', function()
       {
         done(error);
       });
-  });
-
-  it('can add document collections?', function()
-  {
-    var collection = db.collection.insert({name: 'food test collection'});
   });
 
 });
